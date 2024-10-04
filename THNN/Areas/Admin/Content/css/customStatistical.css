@@ -1,0 +1,158 @@
+﻿body {
+}
+
+.filter_box-statistical {
+    margin-right:46px;
+}
+
+.search_report_for {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    padding: 20px 30px;
+    border-radius: 20px;
+}
+
+    .search_report_for p {
+        width: 100px;
+        margin-bottom: 0;
+        flex-grow: 0;
+    }
+
+    .search_report_for select {
+        outline: none;
+        padding: 4px 10px;
+    }
+
+.input-control {
+    width: 50% !important;
+}
+
+.search_for_group {
+    margin-top: 16px;
+    margin-left: -21px;
+}
+
+
+.search_for-date {
+    display: flex;
+    text-align: center;
+    margin-left: 20px;
+    align-items: center;
+    display: none;
+}
+
+    .search_for-date.active {
+        display: flex;
+    }
+
+    .search_for-date span {
+        margin: 0 10px;
+    }
+
+    .search_for-date button {
+        margin-left: 20px;
+        padding: 0px 10px;
+        display: block;
+    }
+
+.search_for-MaHD,
+.search_for-MaKH {
+    display: none;
+    ;
+    align-items: center;
+    margin-left: 20px;
+}
+
+    .search_for-MaHD.active,
+    .search_for-MaKH.active {
+        display: flex;
+    }
+
+    .search_for-MaHD input,
+    .search_for-MaKH input {
+        margin-right: 5px;
+    }
+
+    .search_for-MaHD button,
+    .search_for-MaKH button {
+        padding: 2px 25px;
+    }
+
+.tongTien {
+    text-align: right;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+    .tongTien span {
+        font-weight: 500;
+    }
+
+.group_filter-statistical {
+    border: 1px solid #ddd;
+    padding: 20px 30px;
+    border-radius: 20px;
+}
+
+.body_statistical {
+    display: flex;
+    align-items: flex-start;
+}
+
+.table_statistical {
+    flex-grow:1;
+}
+
+.header_filter {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom:16px;
+    display:block;
+}
+
+
+.form-check {
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+table th {
+    background-color: #ddd;
+}
+
+.selectedChartStatitical,
+.selectedStatiticalFor {
+    outline: none;
+    padding: 4px 10px;
+}
+
+.table_statistical {
+    display: none;
+}
+
+.table_statistical.active {
+    display: block;
+}
+
+.search_for_group_box {
+    display:none;
+}
+
+.search_for_group_box.active {
+    display: flex;
+}
+
+.chart_statistical {
+    display: none;
+}
+
+.chart_statistical.active {
+    display:block;
+}
+
+.canvasjs-chart-container .canvasjs-chart-title {
+    text-transform: capitalize; /* or uppercase, lowercase as needed */
+}
+

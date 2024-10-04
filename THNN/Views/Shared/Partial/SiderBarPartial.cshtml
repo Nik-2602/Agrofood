@@ -1,0 +1,40 @@
+﻿<div class="side__bar">
+    <ul class="side__bar-list">
+
+        @if (ViewBag.active == 1)
+        {
+            <li class="side__bar-item active">
+                <a href="~/" class="side__bar-item-link">
+                    <span>TRANG CHỦ</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="side__bar-item">
+                <a href="~/" class="side__bar-item-link">
+                    <span>TRANG CHỦ</span>
+                </a>
+            </li>
+        }
+
+        @if (ViewBag.active == 2)
+        {
+            <li class="side__bar-item active">
+                <a href="~/Home/About" class="side__bar-item-link">
+                    <span>VỀ CHÚNG TÔI</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="side__bar-item">
+                <a href="~/Home/About" class="side__bar-item-link">
+                    <span>VỀ CHÚNG TÔI</span>
+                </a>
+            </li>
+        }
+
+
+    </ul>
+</div>

@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/assets/css/base.css">
+    <link rel="stylesheet" href="~/assets/css/food.css">
+    <link rel="stylesheet" href="~/assets/css/response.css">
+    <link rel="stylesheet" href="~/assets/css/login.css">
+    <link rel="stylesheet" href="~/assets/css/toast.css" />
+    <title>@ViewBag.Title</title>
+
+    <style>
+        @RenderSection("style",false)
+
+        .content__login {
+            top: 11px;
+        }
+
+        @@keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(calc(100% + 32px));
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @@keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        .toastRB {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-left: 4px solid;
+            min-width: 400px;
+            max-width: 450px;
+            padding: 20px 0;
+            border-radius: 2px;
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+            transition: all linear 0.3s;
+        }
+
+        .toast--success {
+            border-color: #47d864;
+        }
+
+            .toast--success .toast__icon {
+                color: #47d864;
+            }
+
+        .toast--info {
+            border-color: #2f86eb;
+        }
+
+            .toast--info .toast__icon {
+                color: #2f86eb;
+            }
+
+        .toast--error {
+            border-color: #ff623d;
+        }
+
+            .toast--error .toast__icon {
+                color: #ff623d;
+            }
+
+        .toast--warning {
+            border-color: #ffc021;
+        }
+
+            .toast--warning .toast__icon {
+                color: #ffc021;
+                color: #ffc021;
+            }
+
+        .toast__close:hover {
+            opacity: 0.6;
+        }
+
+        .toastRB + .toastRB {
+            margin-top: 24px !important;
+        }
+    </style>
+
+</head>
+<body>
+    <script src="~/assets/js/toast.js"></script>
+    <div class="container">
+        <div class="header__login">
+            <a href="~/Home" class="header__logo-login">
+                <img src="~/assets/img/logo/logo.png" alt="Logo" />
+            </a>
+            <span class="header__login-header">@ViewBag.Title</span>
+            <div class="header__login-help">
+                <a href="">Bạn có cần giúp đỡ ?</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content @ViewBag.register">
+        <img src="~/assets/img/login-img/login.png" alt="">
+        <div class="content__login">
+            @RenderBody()
+        </div>
+    </div>
+
+    <div id="toast">
+
+    </div>
+
+
+
+    @Html.Partial("~/Views/Shared/Partial/FooterPartial.cshtml")
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <script src="~/assets/js/toast.js"></script>
+    @RenderSection("toast", false)
+</body>
+</html>

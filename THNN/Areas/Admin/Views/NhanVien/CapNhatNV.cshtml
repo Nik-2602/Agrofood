@@ -1,0 +1,181 @@
+﻿
+@model THNN.Models.NhanVien
+
+@{
+    ViewBag.Title = "Cập Nhật Nhân Viên";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+<main>
+    <section class="service_section">
+        <div class="container">
+
+            <h2>Cập Nhật</h2>
+
+            @using (Html.BeginForm("CapNhatNV", "NhanVien", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Nhân Viên</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MaNV, "Mã Nhân Viên", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @class = "form-control", disabled = true } })
+                            @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HoTen, "Họ Tên", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NgaySinh, "Ngày Sinh", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @{
+
+                                if (Model.NgaySinh == null)
+                                {
+                                    DateTime specificDate = new DateTime(1991, 01, 01);
+                                    string formattedDate = specificDate.ToString("yyyy-MM-dd");
+                                    <input class="form-control" name="NgaySinh" value="@formattedDate" type="date" />
+                                }
+                                else
+                                {
+                                    @* @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "user-input", type = "date", value = "@Html.Raw(DateTime.Now.ToString("yyyy - MM - dd").Replace(' ','T'))" } });*@
+                                    DateTime? specificDate = Model.NgaySinh;
+                                    string formattedDate = specificDate?.ToString("yyyy-MM-dd");
+                                    <input class="form-control" name="NgaySinh" value="@formattedDate" type="date" />
+                                }
+
+                                // Định dạng đối tượng DateTime thành chuỗi chỉ chứa ngày
+
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GioiTinh, "Giới Tính", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @{if (Model.GioiTinh != null)
+                                {
+                                    if (Model.GioiTinh.Equals("Nam"))
+                                    {
+                                        <p style="display:inline-block" class="user-p">Nam <input style="margin-right:10px" checked type="radio" name="GioiTinh" value="Nam" /></p>
+                                        <p style="display:inline-block" class="user-p">Nữ <input type="radio" name="GioiTinh" value="Nữ" /></p>
+
+                                    }
+                                    else
+                                    {
+                                        <p style="display:inline-block" class="user-p">Nam <input style="margin-right:10px" type="radio" name="GioiTinh" value="Nam" /></p>
+                                        <p style="display:inline-block" class="user-p">Nữ <input checked type="radio" name="GioiTinh" value="Nữ" /></p>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <p style="display:inline-block" class="user-p">Nam <input style="margin-right:10px" type="radio" name="GioiTinh" value="Nam" /></p>
+                                    <p style="display:inline-block" class="user-p">Nữ <input type="radio" name="GioiTinh" value="Nữ" /></p>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DiaChi, "Địa Chỉ", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SoDT, "Số Điện Thoại", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.SoDT, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SoDT, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TaiKhoan, "Tài Khoản", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TaiKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MatKhau, "Mật Khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control", type = "password", } })
+                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Hình ảnh</label>
+                        <div class="col-md-10">
+                            <img style="width:50px;height:40px" src="@Model.HinhAnh" alt="">
+                            <label for="labelFileAnh"> Thay đổi ảnh</label>
+                            <input type="file" name="fileAnh" id="labelFileAnh" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Loại nhân viên</label>
+                        <div class="col-md-10">
+                            @{
+                                if (Model.LoaiNV == "Admin")
+                                {
+                                    <select class="form-control" name="LoaiNV" id="">
+                                        <option value="Admin" selected>Admin</option>
+                                        <option value="Nhân viên kho">Nhân viên kho</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select class="form-control" name="LoaiNV" id="">
+                                        <option value="Admin">Admin</option>
+                                        <option value="Nhân viên kho" selected>Nhân viên kho</option>
+                                    </select>
+                                }
+                            }
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Lưu" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div>
+                @Html.ActionLink("Quay lại", "Index")
+            </div>
+        </div>
+    </section>
+</main>
+

@@ -1,0 +1,217 @@
+﻿<div class="header__social">
+    <ul class="header__social-list">
+        <li class="header__social-item">
+            <a href="https://www.facebook.com/profile.php?id=61556689292198"> <i class="fab fa-facebook-f"></i></a>
+        </li>
+        <li class="header__social-item">
+            <a href="">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </li>
+
+    </ul>
+</div>
+<div class="header__phone">
+    <i class="fas fa-phone"></i>
+    <div class="header__phone-number">
+        <h4>0335614234</h4>
+        <p>Thứ Hai - Thứ Sáu: 9:00-20:00</p>
+    </div>
+</div>
+<div class="header__action">
+    <ul class="header__action-list">
+        <li class="header__action-item ">
+
+            @{var user = Session["User"] as THNN.Models.KhachHang;
+                if (user == null)
+                {
+                    <div class="header__action-no-acc">
+                        <i class="far fa-user"></i>
+                        <ul class="heder__action-user-menu">
+                            <li><a href="~/User/LoginUser">Đăng nhập</a></li>
+                            <li><a href="~/User/RegisterUser">Đăng ký</a></li>
+                        </ul>
+                    </div>
+
+                }
+                else
+                {
+
+                    <div class="header__action-ac active">
+                        <img src="@user.HinhAnhKH" alt="">
+                        <span>@user.HoTen</span>
+                        <ul class="heder__action-user-menu">
+                            <li>
+                                <a href="~/User/InforUser">Tài khoản của tôi</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("PurchaseOrder", "User", new { id = user.MaKH })">Đơn mua</a>
+                            </li>
+                            <li>
+                                <a href="~/User/LogoutUser">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+
+
+
+
+            }
+        </li>
+        <li>
+            <i class="far fa-bell"></i>
+            <span class="header__cart-notice">3</span>
+            <div class="header__cart-notify">
+                <p class="header_notify-head">Thông báo mới nhận</p>
+                <ul class="header_notify-list">
+                    <li class="header_notify-item">
+                        <a href="" class="header_notify-link">
+                            <img src="~/assets/img/notify-sales/notify-sales-1.jpg"
+                                 alt=""
+                                 class="header_link-img" />
+                            <div class="header_link-info">
+                                <p class="header_info-head">
+                                    Từ 24/5/2023, diễn ra chương trình 'lễ hội măng cụt -
+                                    bao ăn bao rẻ
+                                </p>
+                                <p class="header_info-desc">
+                                    Từ 24/5/2023, Bách hóa XANH diễn ra chương trình 'lễ
+                                    hội măng cụt - bao ăn bao rẻ'. Tìm hiểu chi tiết
+                                    chương trình qua bài viết sau.
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="header_notify-item">
+                        <a href="" class="header_notify-link">
+                            <img src="~/assets/img/notify-sales/notify-sales-3.jpg"
+                                 alt=""
+                                 class="header_link-img" />
+                            <div class="header_link-info">
+                                <p class="header_info-head">
+                                    Mừng đại lễ ăn chay - rau củ quả giảm sốc đến 20%
+                                </p>
+                                <p class="header_info-desc">
+                                    Từ ngày 29/05/2023 - 17/06/2023, Ngày Chay, chọn mua
+                                    rau, củ, quả các loại tại Bách hoá XANH sẽ được hưởng
+                                    ưu đãi cực hấp dẫn lên đến 20%. Đặt hàng ngay!
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li class="header_notify-item">
+                        <a href="" class="header_notify-link">
+                            <img src="~/assets/img/notify-sales/notify-sales-6.png"
+                                 alt=""
+                                 class="header_link-img" />
+                            <div class="header_link-info">
+                                <p class="header_info-head">
+                                    Trái cây ngon - Giá xe đẩy chỉ từ 11k tại Bách hóa
+                                    XANH
+                                </p>
+                                <p class="header_info-desc">
+                                    Thưởng thức hương vị trái cây tươi ngon tại Bách hóa
+                                    XANH với ưu đãi giá cực sốc chỉ từ 11.000đ chỉ duy
+                                    nhất từ 11/08 - 31/8/2023.
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+
+                <button class="header_notify-footer">Xem tất cả</button>
+            </div>
+        </li>
+        <li>
+            <i class="fas fa-shopping-cart"></i>
+            @{
+                if (Session["User"] == null)
+                {
+                    <span class="header__cart-notice listBuyProduct">0</span>
+                    <div class="header__cart">
+                        <div class="header__no-cart active">
+                            <img src="~/assets/img/img-no-cart/no_cart.png"
+                                 class="header__no-cart-img"
+                                 alt="" />
+                            <span class="header__no-cart-message">Chưa có sản phẩm</span>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    var listBuyKH = Session["getListBuyKH"] as List<THNN.Models.SP_LH_DDH_CTDDH>;
+                    if (listBuyKH != null)
+                    {
+                        <span class="header__cart-notice listBuyProduct">@listBuyKH.Count</span>
+                        if (listBuyKH.Count == 0)
+                        {
+                            <div class="header__cart">
+                                <div class="header__no-cart active">
+                                    <img src="~/assets/img/img-no-cart/no_cart.png"
+                                         class="header__no-cart-img"
+                                         alt="" />
+                                    <span class="header__no-cart-message">Chưa có sản phẩm</span>
+                                </div>
+                                <div class="header__bought-cart">
+                                    <h4 class="heading__bought-heading">Sản phẩm đã thêm</h4>
+                                    <ul class="header__bought-list"></ul>
+                                    <button class="header__bought-show"><a href="~/Order">Xem giỏ hàng</a></button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="header__cart">
+                                <div class="header__no-cart ">
+                                    <img src="~/assets/img/img-no-cart/no_cart.png"
+                                         class="header__no-cart-img"
+                                         alt="" />
+                                    <span class="header__no-cart-message">Chưa có sản phẩm</span>
+                                </div>
+                                <div class="header__bought-cart active">
+                                    <h4 class="heading__bought-heading">Sản phẩm đã thêm</h4>
+                                    <ul class="header__bought-list">
+                                        @foreach (var item in listBuyKH)
+                                        {
+
+                                            var giaBanOri = item.GiaBan;
+                                            string giaBan = string.Format("{0:n0}", giaBanOri);
+                                            <li class="header__bought-item">
+                                                <img src="@item.HinhAnh"
+                                                     alt=""
+                                                     class="header__bought-item-img" />
+                                                <div class="header__bought-info">
+                                                    <div class="header__bought-info-head">
+                                                        <h5 class="header_head-name">@item.TenSP</h5>
+                                                        <div class="header_head-wrap">
+                                                            <span class="header_wrap-price">@giaBan</span>
+                                                            <span class="header_wrap-mutiply">x</span>
+                                                            <span class="header__wrap-quatity">@item.SoLuong</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="header__bought-info-body">
+                                                        <span class="header_body-desc">Phân loại: @item.TenLH</span>
+                                                        <a class="header_body-del" data-JS="@item.MaSP">Xóa</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                    <button class="header__bought-show"><a href="~/Order">Xem giỏ hàng</a></button>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+
+                }
+            }
+
+        </li>
+    </ul>
+</div>

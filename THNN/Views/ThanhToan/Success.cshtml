@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Success";
+    Layout = "~/Views/Shared/LayoutUserNoJS.cshtml";
+}
+
+
+
+<div class="body">
+    <div class="container bg-white">
+        <div class="w-75 m-auto mt-3 p-5 text-center">
+            <!-- Thêm lớp "my-4" để tạo ra khoảng cách trên và dưới tiêu đề trang -->
+            <img class="img-order-success" src="~/assets/img/img-bank/Flat_tick_icon.svg.png" alt="">
+            <h1 class="my-3 text-success text-center">Thanh toán thành công</h1>
+            <!-- Sử dụng lớp "alert" và "alert-danger" để tạo ra thông báo lỗi -->
+            <p style="font-size: 21px;">Mã số đơn đặt hàng của bạn là <span style="color: rgb(46, 199, 144); font-weight: 600; font-size: 18px;">@ViewBag.orderInfor</span></p>
+            @{
+                string giaBan = string.Format("{0:n0}", int.Parse(ViewBag.TotalPrice) / 100);
+            }
+            <p style="font-size: 21px;">Tổng số tiền bạn đã thanh toán là:<span style="color: rgb(208, 1, 27); font-weight:600"> @giaBan đ</span></p>
+            <p style="font-size: 21px;">Bạn có thể xem chi tiết đơn hàng vừa thanh toán trong <a href="">Đơn hàng của tôi</a></p>
+            <p style="margin-bottom: 30px; font-size: 21px">Thời gian thanh toán của bạn là <span style=" font-weight: 600; font-size: 18px;">@ViewBag.paymentTime</span></p>
+            <a style="text-align: right; font-size: 20px; display: block; font-style: italic; text-decoration: none; " href="~/Home" class="main-btn-four">Tiếp tục mua hàng</a>
+        </div>
+    </div>
+</div>

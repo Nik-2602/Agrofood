@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/assets/css/food.css" />
+    <link rel="stylesheet" href="~/assets/css/base.css" />
+    <link rel="stylesheet" href="~/assets/css/response.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/assets/font/fontawesome-free-6.2.1-web/css/all.min.css" />
+    <title>Food</title>
+    <style>
+
+        .header__action-ac > span {
+            font-size: 1.4rem;
+            margin-left: 4px;
+            font-weight: 400;
+        }
+
+        .header__no-cart.active {
+            display: none !important;
+        }
+
+        .header_head-name {
+            width: 200px;
+        }
+
+    @RenderSection("Style", false)
+
+    </style>
+</head>
+<body>
+    <div class="food">
+
+        @Html.Partial("~/Views/Shared/Partial/HeaderTablePartial.cshtml")
+
+
+        <div class="header">
+            <a href="~/Home" class="header__logo">
+                <img src="~/assets/img/logo/logo.png"
+                     alt="Logo" />
+            </a>
+            <div class="header__search">
+                <form action="~/Home/SearchAction" method="post">
+                    <input autocomplete="off" class="header__search-input" type="text" name="search" method="post" placeholder="Tìm kiếm sản phẩm ...." />
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="header__search-history">
+                        <h3 class="header_history-head">Lịch sử tìm kiếm</h3>
+                        @RenderSection("render_history_search", false)
+
+                    </div>
+                </form>
+            </div>
+
+            @Html.Partial("~/Views/Shared/Partial/HeaderAnotherInfoPartial.cshtml")
+        </div>
+
+        @Html.Partial("~/Views/Shared/Partial/SiderBarPartial.cshtml")
+
+
+
+
+
+        <div class="content">
+            <div class="slider">
+                <div class="container-fluid">
+
+                    <div id="toast"></div>
+                    <div class="row">
+                        <div class="col-lg-2 col-lg-2 col-sm-0">
+                            @Html.Partial("~/Views/Shared/Partial/CategoryPartial.cshtml")
+                        </div>
+
+                        <div class="col-lg-10 col-md-10 col-sm-12">
+                            @RenderBody()
+
+                            <div class="container-fluid">
+                                <div class="footer__top">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="footer__top-left">
+                                                <h2 class="footer__tl-heading">
+                                                    Chúng tôi cố gắng cung cấp cho bạn những sản phẩm tốt cho sức khỏe nhất
+                                                </h2>
+                                                <h4 class="footer__tl-subHeading">
+                                                    Chúng tôi đảm bảo chất lượng tất cả các sản phẩm cung ứng đến khách hàng.
+                                                    <br>
+                                                    Sức khỏe của bạn là sứ mệnh của chúng tôi
+                                                </h4>
+                                                <div class="footer__tl-list">
+                                                    <div class="footer__tl-item">
+                                                        <i class="fas fa-leaf"></i>
+                                                        <span>Sản phẩm tươi sạch 99%</span>
+                                                    </div>
+                                                    <div class="footer__tl-item">
+                                                        <i class="fas fa-truck"></i>
+                                                        <span>Miễn phí giao hàng</span>
+                                                    </div>
+                                                </div>
+                                                <a href="~/Home/About">Về Chúng Tôi</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="footer-right-img">
+                                                        <img src="~/assets/img/footer/footer-left.jpg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="footer-right-img">
+                                                                <img src="~/assets/img/footer/footer-right-1.jpg" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="footer-right-img">
+                                                                <img src="~/assets/img/footer/footer-right-2.jpg" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            @Html.Partial("~/Views/Shared/Partial/FooterPartial.cshtml")
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+
+    @RenderSection("Script", false)

@@ -1,0 +1,148 @@
+﻿@model THNN.Models.SanPham
+
+
+@{
+    ViewBag.Title = "ThemMoiSP";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+<main>
+    <section class="service_section">
+        <div class="container">
+
+            <h2>Thêm Mới</h2>
+
+            @using (Html.BeginForm("ThemMoiSP", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Sản Phẩm</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Loại Hàng</label>
+                <div class="col-md-10">
+                    <select class="form-control" name="LoaiHang" id="ddlLoaiHang">
+                        <option>--Chọn--</option>
+                        @{
+                            List<THNN.Models.LoaiHang> listDSLoaiHang = (List<THNN.Models.LoaiHang>)Session["DanhSachLH"];
+                            if (listDSLoaiHang != null)
+                            {
+                                foreach (var item in listDSLoaiHang)
+                                {
+                                    <option value="@item.MaLH">@item.TenLH</option>
+                                }
+                            }
+                        }
+
+
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenSP, "Tên Sản Phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GiaBanSP, "Giá Bán Sản Phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.GiaBanSP, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GiaBanSP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrongLuong, "Trọng Lượng", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TrongLuong, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TrongLuong, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MoTaSP, "Mô Tả Sản Phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MoTaSP, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MoTaSP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoLuongT, "Số Lượng Tồn", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SoLuongT, new { htmlAttributes = new { @class = "form-control", } })
+                    @Html.ValidationMessageFor(model => model.SoLuongT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SanXuat, "Sản Xuất", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SanXuat, new { htmlAttributes = new { @class = "form-control", } })
+                    @Html.ValidationMessageFor(model => model.SanXuat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Thương Hiệu</label>
+                <div class="col-md-10">
+                    <select class="form-control" name="NhaCungCap" id="ddlLoaiHang">
+                        <option>--Chọn--</option>
+
+                        @{
+                            List<THNN.Models.NhaCungCap> listDSNhaCungCap = (List<THNN.Models.NhaCungCap>)Session["DanhSachNCC"];
+                            if (listDSNhaCungCap != null)
+                            {
+                                foreach (var item in listDSNhaCungCap)
+                                {
+                                    <option value="@item.TenNCC">@item.TenNCC</option>
+                                }
+                            }
+                        }
+                        
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Hình Ảnh</label>
+                <div class="col-md-10">
+                    <input type="file" name="fileAnh" />
+                    @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Hình Ảnh Khác</label>
+                <div class="col-md-10">
+                    <input type="file" name="fileAnh1" />
+                    @Html.ValidationMessageFor(model => model.HinhAnh1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Tạo" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+            }
+
+            <div>
+                @Html.ActionLink("Quay lại", "Index")
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<THNN.Models.PhieuNhap>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+
+
+<main>
+    <section class="service_section">
+        <div class="container">
+
+            <h2>Danh sách phiếu nhập</h2>
+
+            <table class="table">
+                <tr>
+                    <th>
+                        Mã Nhập
+                    </th>
+                    <th>
+                        Mã Nhân Viên
+                    </th>
+                    <th>
+                        Mã Nhà Cung Cấp
+                    </th>
+                    <th>
+                        Ngày Nhập
+                    </th>
+                    <th>
+                        Trị Giá
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    DateTime? date = item.NgayNhap;
+                    string ngayNhap = date?.ToString("dd-MM-yyyy");
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaNV)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaNCC)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ngayNhap)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TriGia)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Xem", "XemPN", new { id = item.MaN })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </section>
+</main>
+

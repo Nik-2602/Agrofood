@@ -1,0 +1,65 @@
+﻿
+
+@model IEnumerable<THNN.Models.CTDonDatHang>
+
+@{
+    ViewBag.Title = "Thông Tin Chi Tiết Đơn Đặt Hàng";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+<main>
+    <section class="service_section">
+        <div class="container">
+
+            <h2>Chi tiết đơn đặt hàng</h2>
+
+
+            <table class="table">
+                <tr>
+                    <th>
+                        Mã Đơn Đặt Hàng
+                    </th>
+                    <th>
+                        Mã Sản Phẩm
+                    </th>
+                    <th>
+                        Số Lượng
+                    </th>
+                    <th>
+                        Giá Bán
+                    </th>
+                    <th>
+                        Tổng Tiền
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaDDH)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaSP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoLuong)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GiaBan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TongTien)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+            <div>
+                @Html.ActionLink("Quay lại", "Index")
+            </div>
+
+        </div>
+    </section>
+</main>
+

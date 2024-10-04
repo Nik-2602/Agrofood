@@ -1,0 +1,85 @@
+﻿@model IEnumerable<THNN.Models.ChuongTrinhGG>
+
+
+@{
+    ViewBag.Title = "Chương Trình Giảm Giá";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+<main>
+    <section class="service_section">
+        <div class="container-fluid">
+
+            <h2>Danh Sách Sự Kiện</h2>
+
+            <p>
+                <a href="~/Admin/ChuongTrinhKhuyenMai/ThemMoiSuKien">Thêm mới</a>
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        Mã CT
+                    </th>
+                    <th>
+                        Tên Sự Kiện
+                    </th>
+                    <th>
+                        Thông Tin Sự Kiện
+                    </th>
+                    <th>
+                        Thời Gian BD
+                    </th>
+                    <th>
+                        Thời Gian Kết Thúc
+                    </th>
+                    <th>
+                       Poster
+                    </th>
+                    <th>
+                        Phầm Trăm Giảm Giá
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    DateTime? date = item.ThoiGianBD;
+                    DateTime? date2 = item.ThoiGianKT;
+                    string ngayBD = date?.ToString("dd-MM-yyyy");
+                    string ngayKT = date2?.ToString("dd-MM-yyyy");
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaCT)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenSuKien)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThongTinSuKien)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ngayBD)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ngayKT)
+                        </td>
+                        <td>
+                            <img src="@item.Poster" style="height:50px;width:200px" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhanTram)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Cập Nhật", "CapNhatCTGG", new { id = item.MaCT }) |
+                            @Html.ActionLink("Xóa", "XoaCTGG", new { id = item.MaCT }) |
+                            @Html.ActionLink("Thêm sản phẩm", "ThemSanPham", new { id = item.MaCT })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </section>
+</main>
+
+

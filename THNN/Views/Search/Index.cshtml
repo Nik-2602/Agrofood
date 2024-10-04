@@ -1,0 +1,120 @@
+﻿
+
+@{
+    ViewBag.Title = "Tìm kiếm";
+    Layout = "~/Views/Shared/LayoutUser.cshtml";
+
+}
+@section Style {
+    .content {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding-top:149px;
+    }
+}
+
+@section render_history_search {
+
+    @{
+        if (@ViewBag.getControllerHome.SearchList != null)
+        {
+            <ul class="header_history-list">
+                @foreach (var item in @ViewBag.getControllerHome.SearchList)
+                {
+                    <li class="header_history-item">
+                        <a href="">
+                            <span>@item</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    }
+
+}
+
+<div class="sales-this-week">
+    <h2 class="sales-this-week__heading" style="margin-left: 7px; margin-right: 9px;">TẤT CẢ SẢ PHẨM</h2>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="sales-this-week__item">
+                <div class="sales-tw__sub-list vet">
+                    @{
+
+                        var listSearchProduct = Session["getListSPSearch"] as List<THNN.Models.SP_LH_CTGG>;
+                        if (listSearchProduct != null)
+                        {
+
+                            foreach (var data in listSearchProduct)
+                            {
+                                THNN.Models.SP_LH_CTGG item = data;
+                                string giaBan = "";
+                                string giaBanSales = "";
+                                var phanTramSales = item.PhanTram * 100;
+                                if (item.PhanTram.HasValue)
+                                {
+                                    var giaBanOri = item.GiaBanSP - (item.GiaBanSP * (phanTramSales / 100));
+                                    giaBan = string.Format("{0:n0}", giaBanOri);
+                                    giaBanSales = string.Format("{0:n0}", item.GiaBanSP);
+                                }
+                                else
+                                {
+                                    var giaBanOri = item.GiaBanSP;
+                                    giaBan = string.Format("{0:n0}", giaBanOri);
+
+                                }
+
+
+                                <a href="@Url.Action("DetailProduct","Product",new { @TenSP = item.TenSP })" style="flex: 0 0 25%; color: unset; padding-left: 8px; padding-right: 8px;" class="sales-tw__link">
+                                    <div class="sales-tw__sub-item">
+                                        <i class="far fa-heart sales-tw__sub-icon"></i>
+                                        <div class="sales-tw__sub-item-img">
+                                            <img src="@item.HinhAnh" alt="">
+                                        </div>
+                                        <div class="sales-tw__sub-item-content">
+                                            <p class="sales-tw_sub-item__sub-shead">
+                                                @item.TenLH
+                                            </p>
+                                            <h3 class="sales-tw_sub-item__sub-head">
+                                                @item.TenSP
+                                            </h3>
+                                            <div class="sales-tw_sub-item__prices">
+                                                <span class="sales-tw_sub-item__sub-prices">@giaBan đ</span>
+                                                @if (!giaBanSales.Equals(""))
+                                                {
+                                                    <span class="sales-tw_sub-item__sales-prices">@giaBanSales đ</span>
+                                                }
+
+                                            </div>
+
+                                        </div>
+
+                                        <button class="sales-tw_sub-item__add">Chọn Mua</button>
+
+
+                                        @if (item.PhanTram.HasValue)
+                                        {
+                                            <div class="item__sale-off">
+                                                <span class="sale-off-percent">@phanTramSales %</span>
+                                                <span class="sale-off-label">GIẢM</span>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </a>
+
+                            }
+                        }
+                    }
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

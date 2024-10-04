@@ -1,0 +1,72 @@
+﻿
+@model IEnumerable<THNN.Models.ChiTietHoaDon>
+
+
+
+@{
+    ViewBag.Title = "Chi Tiết Doanh Thu";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+<main>
+    <section class="service_section">
+        <div class="container-fluid">
+
+            <h2>Thông Tin Chi Tiết</h2>
+
+            <table class="table">
+                <tr>
+                    <th>
+                        Mã Hóa Đơn
+                    </th>
+                    <th>
+                        Mã Đơn Đặt Hàng
+                    </th>
+                    <th>
+                        Mã Sản Phẩm
+                    </th>
+                    <th>
+                        Số Lượng
+                    </th>
+                    <th>
+                        Giá Bán
+                    </th>
+                    <th>
+                        Tổng Tiền
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+
+                    string tongTien = string.Format("{0:n0}", item.TongTien);
+                    string giaBan = string.Format("{0:n0}", item.GiaBan);
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaHD)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaDDH)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaSP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoLuong)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => giaBan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => tongTien)
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </section>
+</main>
+

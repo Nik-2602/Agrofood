@@ -1,0 +1,217 @@
+﻿@model THNN.Models.KhachHang
+
+@{
+    ViewBag.Title = "Tài khoản của tôi";
+    Layout = "~/Views/Shared/LayoutNoProduct.cshtml";
+
+}
+@section Style {
+    .content {
+    width: 100%;
+    padding-top:149px;
+    background-color: #f5f5f5;
+    }
+
+    .listselected-day {
+    padding-bottom: 18px;
+    }
+
+    .user-input {
+    transform:translateY(-5px);
+    }
+
+}
+
+
+<div class="container">
+    <div class="infor__user">
+        <div class="infor__user-top">
+            <h2 class="infor__user-head">Hồ Sơ Của Tôi</h2>
+            <h5 class="infor__user-sub-head">Quản lý thông tin hồ sơ để bảo mật tài khoản</h5>
+        </div>
+        <div class="infor__user-body">
+
+            @using (Html.BeginForm("InforUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+
+                    <div class="col-lg-8">
+                        <div class="user-body-left">
+
+
+                            <div class="form-horizontal">
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger h5" })
+                                <table class="user-body-left-table">
+                                    <tr class="user-body-left-table__item clearfix">
+                                        <td><label for="" class="infor__user-body-tittle">Tên đăng nhập:</label></td>
+                                        <td><p class="user-p">@Model.TaiKhoan</p></td>
+                                    </tr>
+
+                                    <tr class="user-body-left-table__item">
+                                        <td>
+                                            <label for="" class="infor__user-body-tittle">Họ tên:</label>
+                                        </td>
+                                        <td>
+
+                                            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "user-input" } });
+                                        </td>
+                                    </tr>
+
+                                    <tr class="user-body-left-table__item">
+                                        <td>
+                                            <label for="" class="infor__user-body-tittle">Email:</label>
+                                        </td>
+                                        <td>
+
+                                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "user-input" } });
+                                        </td>
+                                    </tr>
+
+                                    <tr class="user-body-left-table__item">
+                                        <td>
+                                            <label for="" class="infor__user-body-tittle">Số điện thoại:</label>
+                                        </td>
+                                        <td>
+
+                                            @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "user-input" } });
+                                        </td>
+                                    </tr>
+
+                                    <tr class="user-body-left-table__item">
+                                        <td>
+                                            <label for="" class="infor__user-body-tittle">Giới tính:</label>
+                                        </td>
+                                        <td>
+                                            @{if (Model.GioiTinh != null)
+                                                {
+                                                    if (Model.GioiTinh.Equals("Nam"))
+                                                    {
+                                                        <p class="user-p">Nam <input checked type="radio" name="GioiTinh" value="Nam" /></p>
+                                                        <p class="user-p">Nữ <input type="radio" name="GioiTinh" value="Nữ" /></p>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="user-p">Nam <input type="radio" name="GioiTinh" value="Nam" /></p>
+                                                        <p class="user-p">Nữ <input checked type="radio" name="GioiTinh" value="Nữ" /></p>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <p class="user-p">Nam <input type="radio" name="GioiTinh" value="Nam" /></p>
+                                                    <p class="user-p">Nữ <input type="radio" name="GioiTinh" value="Nữ" /></p>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="user-body-left-table__item">
+                                        <td>
+                                            <label for="" class="infor__user-body-tittle">Ngày sinh:</label>
+                                        </td>
+                                        <td>
+                                            <div class="listselected-day">
+                                                @{
+
+                                                    if (Model.NgaySinh == null)
+                                                    {
+                                                        DateTime specificDate = new DateTime(1991, 01, 01);
+                                                        string formattedDate = specificDate.ToString("yyyy-MM-dd");
+                                                        <input class="user-input" name="NgaySinh" value="@formattedDate" type="date" />
+                                                    }
+                                                    else
+                                                    {
+
+                                                        DateTime? specificDate = Model.NgaySinh;
+                                                        string formattedDate = specificDate?.ToString("yyyy-MM-dd");
+                                                        <input class="user-input" name="NgaySinh" value="@formattedDate" type="date" />
+                                                    }
+
+
+
+                                                }
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                    <tr class="user-body-left-table__item">
+                                        <td>
+                                            <label for="" class="infor__user-body-tittle">Địa chỉ:</label>
+                                        </td>
+                                        <td>
+                                            <div class="listselected-day">
+                                                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "user-input" } });
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr class="user-body-left-table__item">
+                                        <td>
+                                            <label for="" class="infor__user-body-tittle">Mật khẩu:</label>
+                                        </td>
+                                        <td>
+                                            <div class="listselected-day">
+                                                @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "user-input", type = "password" } })
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+                                        <td></td>
+                                        <td><button style="background-color: var(--main-color); color:#fff;" class="btn-filter">Lưu</button></td>
+                                    </tr>
+
+                                </table>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="user-body-right">
+                            <div class="user-body-img">
+                                <img src="@Model.HinhAnhKH" alt="">
+                            </div>
+                            <label for="fileAnh"> Chọn Ảnh</label>
+                            @Html.EditorFor(model => model.HinhAnhKH, new { htmlAttributes = new { @class = "user-input d-none", type = "file", id = "fileAnh" } })
+                            <p>
+                                Dụng lượng file tối đa 1 MB
+                                <br />Định dạng:.JPEG, .PNG
+                            </p>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+            }
+
+
+
+
+        </div>
+    </div>
+</div>
+
+@section Script {
+
+
+}

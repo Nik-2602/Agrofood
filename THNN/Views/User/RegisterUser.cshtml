@@ -1,0 +1,103 @@
+﻿
+@model THNN.Models.KhachHang
+
+@{
+    ViewBag.register = "register";
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/LayoutLR.cshtml";
+}
+
+@section style {
+    hr {
+    top: 75.5%;
+    }
+
+    .content__login {
+    padding: 20px 30px !important;
+    }
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger h5" })
+        <div class="content__login-top">
+            <h3 class="content_top-head">Đăng ký</h3>
+
+         
+            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "content_top-input", placeholder = "Nhập họ tên" } })
+            @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger h6" })
+
+            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "content_top-input", placeholder = "Địa chỉ" } })
+            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger h6" })
+
+
+            @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "content_top-input", placeholder = "Số điện thoại" } })
+            @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger h6" })
+
+
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "content_top-input", placeholder = "Email" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger h6" })
+
+
+            @Html.EditorFor(model => model.TaiKhoan, new { htmlAttributes = new { @class = "content_top-input", placeholder = "Tài khoản" } })
+            @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger h6" })
+
+
+            @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "content_top-input", placeholder = "Mật khẩu", @type = "password" } })
+            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger h6" })
+
+
+
+
+            <button class="content_top-btn" type="submit">Đăng ký</button>
+
+            <span class="content_top-another">Hoặc</span>
+        </div>
+        <div class="content__login-bottom">
+            <div class="login_another">
+                <div class="login_another-item facebook">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                </div>
+                <div class="login_another-item gg">
+                    <i class="fab fa-google"></i>
+                    <span>Google</span>
+                </div>
+            </div>
+
+            <span class="content_bottom-register mb-2">
+                Bằng việc đăng kí, bạn đã đồng ý với Agrofood về
+                <br>
+                <a href="~/Home/Policy">Điều khoản dịch vụ</a> & <a href="">Chính sách bảo mật</a>
+            </span>
+
+            <span class="content_bottom-register mt-3">Bạn đã có tài khoản ?<a href="~/User/LoginUser">Đăng nhập</a></span>
+        </div>
+    </div>
+
+
+
+}
+
+
+
+@section toast{
+    <script>
+        // Kiểm tra query string để xác định xem có hiển thị toast hay không
+        const urlParams = new URLSearchParams(window.location.search);
+        const success = urlParams.get('success');
+
+        if (success === "1") {
+            showSuccessToast();
+        }
+    </script>
+
+}
+
+
+

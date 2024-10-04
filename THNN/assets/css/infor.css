@@ -1,0 +1,123 @@
+﻿.infor__user {
+    margin-top: 25px;
+    background-color: #fff;
+    padding: 20px 30px;
+}
+
+.infor__user-top {
+    padding: 18px 0;
+    border-bottom: 1px solid #efefef;
+}
+
+.infor__user-body {
+    padding: 30px 0;
+}
+
+.infor__user-head {
+    color: #333333;
+    font-style: 1.8rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-bottom: 3px;
+}
+
+.infor__user-sub-head {
+    margin-top: 5px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #555;
+}
+
+.user-body-left-table tr {
+    padding: 10px;
+    overflow: hidden;
+}
+
+
+
+.user-p {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    margin-bottom: 0;
+    padding-bottom: 30px;
+    display: inline-block;
+    margin-right: 15px;
+}
+
+    .user-p input {
+        margin-left: 4px;
+        transform: translateY(1px);
+    }
+
+.user-input {
+    padding: 5px 10px;
+    outline: none;
+    border: 1px solid rgb(219, 219, 219);
+    width: 100%;
+    font-size: 1.6rem;
+    transform: translateY(-14px);
+}
+
+.infor__user-body-tittle {
+    text-align: right;
+    color: rgba(85,85,85,.8);
+    font-size: 1.6rem;
+    /* margin-right: 10px; */
+    padding-bottom: 30px;
+    padding-right: 20px;
+    margin-left: auto;
+    width: 100%;
+}
+
+
+.listselected-day {
+    padding-bottom: 30px;
+}
+
+    .listselected-day select {
+        font-size: 1.4rem;
+        padding: 5px 56px 5px 5px;
+        margin-right: 8px;
+        text-align: left;
+    }
+
+.user-body-right {
+    border-left: 1px solid #efefef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-body-img {
+    width: 100px;
+    height: 100px;
+}
+
+    .user-body-img img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+
+.user-body-right label {
+    border: 1px solid rgb(232, 232, 232);
+    border-radius: 4px;
+    color: #555555;
+    display: flex;
+    flex-direction: column;
+    font-family: Helvetica Neue;
+    font-size: 14px;
+    justify-content: center;
+    line-height: 16.8px;
+    padding: 6px 36px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.user-body-right p {
+    font-size: 1.4rem;
+    color: #8f8e8e;
+    text-align: center;
+}

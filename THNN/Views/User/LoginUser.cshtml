@@ -1,0 +1,58 @@
+﻿
+@model THNN.Models.KhachHang
+
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/LayoutLR.cshtml";
+}
+
+
+@section style {
+    .content_top-forgot {
+    margin-top:8px;
+    }
+
+    hr {
+    top:64%;
+    }
+
+    .content__login {
+    top: 51px !important;
+    }
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger h5" })
+        <div class="content__login-top">
+            <h3 class="content_top-head">Đăng nhập</h3>
+            @Html.EditorFor(model => model.TaiKhoan, new { htmlAttributes = new { @class = "content_top-input", placeholder = "Tài khoản" } })
+            @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger h6" })
+
+            @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "content_top-input", placeholder = "Mật khẩu", type = "password" } })
+            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger h6" })
+            <button class="content_top-btn" type="submit">Đăng nhập</button>
+            <a href="#" class="content_top-forgot">Quên mật khẩu</a>
+            <span class="content_top-another">Hoặc</span>
+            <hr>
+        </div>
+
+        <div class="content__login-bottom">
+            <div class="login_another">
+                <div class="login_another-item facebook">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                </div>
+                <div class="login_another-item gg">
+                    <i class="fab fa-google"></i>
+                    <span>Google</span>
+                </div>
+            </div>
+            <span class="content_bottom-register">Bạn mới biết đến Agrofood ?<a href="~/User/RegisterUser">Đăng ký</a></span>
+        </div>
+    </div>
+}

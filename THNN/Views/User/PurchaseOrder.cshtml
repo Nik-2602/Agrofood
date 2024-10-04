@@ -1,0 +1,443 @@
+﻿
+@{
+    ViewBag.Title = "PurchaseOrder";
+    Layout = "~/Views/Shared/LayoutUserNoJS.cshtml";
+}
+
+@section Style {
+
+    p {
+    margin-bottom: 0!important;
+    }
+
+    .detail_order {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    }
+
+    .nav {
+    float: left;
+    width: 20%;
+    }
+
+    .main {
+    float: left;
+    width: 80%;
+    }
+
+    .footer {
+    clear: both;
+    text-align: center;
+    padding: 20px;
+    }
+
+    .product-list {
+    list-style-type: none;
+    padding: 0;
+    }
+
+    .product-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    }
+
+    .product-image {
+    width: 100px;
+    height: 100px;
+    flex: 0;
+    }
+
+    .group_product-price-quantity {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    }
+
+    .product-body-info {
+    flex: 1;
+
+    }
+
+    .product-info-top {
+    margin-left: 10px;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    }
+
+    .product-name {
+    font-size: 16px;
+    width: 80%;
+    font-style: normal;
+    }
+
+
+
+    .product-price {
+    font-size: 16px;
+    color: var(--primary-color);
+    margin-right: 5px;
+    }
+
+    .product-info-bot {
+    display: flex;
+    padding: 10px 0 0px 10px;
+    justify-content: space-between;
+    }
+
+    .pib_desc {
+    font-size: 14px;
+    color: #757575;
+    }
+
+
+    .pib_price {
+    font-size: 16px;
+    color: var(--primary-color);
+    }
+
+
+
+    .tab {
+    display: flex;
+    position: relative;
+    justify-content: space-around;
+    background-color: #fff;
+    align-items: center;
+    padding: 20px 0;
+    }
+
+    .tab_item {
+    color: var(--my-color);
+    font-size: 2.4rem;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 6px solid transparent;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s ease-out;
+    }
+
+    .tab_item:hover {
+    opacity: 1;
+    }
+
+    .tab_item.active {
+    opacity: 1;
+    }
+
+    .list_order {
+    display: none;
+    }
+
+    .list_order li {
+    background-color: #fff;
+    padding: 30px 50px;
+    margin-top: 10px;
+    border-radius: 4px;
+    }
+
+    .sub_line {
+    color:#ddd;
+    }
+
+    .sub-situation_order {
+    color: #26aa99;
+    }
+
+    .situation_order {
+    color: var(--primary-color);
+    font-weight: 400;
+    }
+
+    .tab_content {
+    display: flex;
+    flex-direction: column;
+
+    }
+
+
+    .list_order.active {
+    margin-top: 20px;
+    list-style-type: none;
+    padding-left: 0;
+    display: block;
+    }
+
+    .tab_content_item {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    margin-bottom: 20px;
+    }
+
+
+    .top_order {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding-bottom:10px;
+    border-bottom: 1px solid rgb(232,232,232);
+    }
+
+    .body_order {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0px;
+    border-bottom: 1px solid rgb(232,232,232);
+    }
+
+    .bot_order {
+    padding-top: 16px;
+    align-self: flex-end ;
+    font-size: 20px;
+
+    }
+
+    .bot_order span {
+    color: var(--primary-color);
+    }
+
+    .btn_pay {
+    background-color: var(--main-color);
+    border: none;
+    outline: none;
+    color: #fff;
+    border-radius: 4px;
+    padding: 8px 20px;
+    margin-top: 16px;
+    float: inline-end;
+    text-decoration: none;
+    }
+
+    .btn_pay.disable {
+    background-color: #f1f1f1;
+    color: #A9A9A9;
+    cursor: not-allowed;
+    }
+
+    .heading_date {
+    color: #000;
+    }
+
+    .heading_date span {
+    color: #26aa99 !important;
+    }
+
+}
+
+
+
+<div class="detail_order">
+    <div class="tab">
+        <div class="tab_item active">
+            <i class="tab_item-icon fas fa-box"></i>
+            <span class="tab_item-heading">Chờ xử lý</span>
+        </div>
+        <div class="tab_item ">
+            <i class="tab_item-icon fas fa-shipping-fast"></i>
+            <span class="tab_item-heading">Đang giao hàng</span>
+        </div>
+        <div class="tab_item">
+            <i class="tab_item-icon fas fa-clipboard-check"></i>
+            <span class="tab_item-heading">Hoàn thành</span>
+        </div>
+    </div>
+
+    <ul class="list_order active">
+        @{
+            if (ViewBag.DsMuaHang != null && ViewBag.DsDDHMuaHang != null)
+            {
+
+                foreach (var item in ViewBag.DsDDHMuaHang)
+                {
+                    DateTime? date = item.NgayDH;
+                    string ngayDH = date?.ToString("dd-MM-yyyy");
+                    <li>
+                        <div class="tab_content">
+                            <div class="top_order">
+                                <h3 class="heading_order"> @item.MaDDH <span class="sub_line">|</span> <span class="heading_date">Ngày đặt hàng: <span> @ngayDH</span> </span></h3>
+                                <h3 class="situation_order"><span class="sub-situation_order"><i class="fas fa-clipboard"></i> Đang xử lý yêu cầu</span> <span class="sub_line">|</span> Đang xử lý</h3>
+                            </div>
+                            <div class="body_order">
+                                @foreach (var itemCT in ViewBag.DsMuaHang)
+                                {
+                                    if (itemCT.MaDDH == item.MaDDH)
+                                    {
+
+                                        <div class="tab_content_item">
+                                            <img class="product-image" src="@itemCT.HinhAnh" alt="Product image">
+                                            <div class="product-body-info">
+                                                <div class="product-info-top">
+                                                    <h2 class="product-name">@itemCT.TenSP</h2>
+                                                    <div class="group_product-price-quantity">
+                                                        <p class="product-price"> @string.Format("{0:n0}", itemCT.GiaBan) đ </p>
+                                                        <p class="product-quantity">x @itemCT.SoLuong</p>
+                                                    </div>
+                                                </div>
+                                                <div class="product-info-bot">
+                                                    <p class="pib_desc">Phân loại: @itemCT.TenLH</p>
+                                                    <p class="pib_price">@string.Format("{0:n0}", itemCT.TongTien) đ</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="bot_order">
+                                <p>Thành tiền: <span>@string.Format("{0:n0}", item.TriGia) đ</span></p>
+                                <button class="btn_pay disable">Đang Chờ Xử Lý</button>
+                            </div>
+                    </li>
+                }
+
+
+            }
+        }
+
+
+
+    </ul>
+
+    <ul class="list_order">
+        @{
+            if (ViewBag.DsDDHGiaoHang != null)
+            {
+                var ThanhTien = 0;
+                foreach (var item in ViewBag.DsDDHGiaoHang)
+                {
+                    DateTime? date = item.NgayGH;
+                    string ngayGH = date?.ToString("dd-MM-yyyy");
+                    <li>
+                        <div class="tab_content">
+                            <div class="top_order">
+                                <h3 class="heading_order"># @item.MaDDH <span class="sub_line">|</span> <span class="heading_date">Ngày giao hàng: <span>@ngayGH</span> </span></h3>
+                                <h3 class="situation_order"><span class="sub-situation_order"><i class="fas fa-dolly-flatbed"></i> Vui lòng nhận hàng</span> <span class="sub_line">|</span> Đang giao hàng</h3>
+                            </div>
+
+
+
+                            <div class="body_order">
+                                @foreach (var itemCT in ViewBag.DsGiaoHang)
+                                {
+                                    if (itemCT.MaDDH == item.MaDDH)
+                                    {
+                                        <div class="tab_content_item">
+                                            <img class="product-image" src="@itemCT.HinhAnh" alt="Product image">
+                                            <div class="product-body-info">
+                                                <div class="product-info-top">
+                                                    <h2 class="product-name">@itemCT.TenSP</h2>
+                                                    <div class="group_product-price-quantity">
+                                                        <p class="product-price">@string.Format("{0:n0}", itemCT.GiaBan) đ </p>
+                                                        <p class="product-quantity">x @itemCT.SoLuong</p>
+                                                    </div>
+                                                </div>
+                                                <div class="product-info-bot">
+                                                    <p class="pib_desc">Phân loại: @itemCT.TenLH</p>
+                                                    <p class="pib_price">@string.Format("{0:n0}", itemCT.TongTien) d</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="bot_order">
+                                <p>Thành tiền: <span>@string.Format("{0:n0}", item.TriGia) đ</span></p>
+                                <a class="btn_pay" href="@Url.Action("NhanHang", "User", new { id = item.MaDDH })">Nhận Hàng</a>
+                            </div>
+                    </li>
+                }
+
+
+            }
+        }
+    </ul>
+
+    <ul class="list_order">
+        @{
+            if (ViewBag.DsHoanThanh != null && ViewBag.DsDDHHoanThanh != null)
+            {
+                var ThanhTien = 0;
+                foreach (var item in ViewBag.DsDDHHoanThanh)
+                {
+
+
+                    DateTime? date = item.NgayGH;
+                    string ngayGH = date?.ToString("dd-MM-yyyy");
+                    <li>
+                        <div class="tab_content">
+                            <div class="top_order">
+                                <h3 class="heading_order"># @item.MaDDH <span class="sub_line">|</span> <span class="heading_date">Ngày nhận hàng: <span>@ngayGH</span> </span></h3>
+                                <h3 class="situation_order"><span class="sub-situation_order"><i class="fas fa-truck"></i> Đơn hàng đã được giao thành công</span> <span class="sub_line">|</span> Hoàn thành</h3>
+                            </div>
+                            <div class="body_order">
+                                @foreach (var itemCT in ViewBag.DsHoanThanh)
+                                {
+                                    if (itemCT.MaDDH == item.MaDDH)
+                                    {
+                                        <div class="tab_content_item ">
+                                            <img class="product-image" src="@itemCT.HinhAnh" alt="Product image">
+                                            <div class="product-body-info">
+                                                <div class="product-info-top">
+                                                    <h2 class="product-name">@itemCT.TenSP</h2>
+                                                    <div class="group_product-price-quantity">
+                                                        <p class="product-price">@string.Format("{0:n0}", itemCT.GiaBan) đ </p>
+                                                        <p class="product-quantity">x @itemCT.SoLuong</p>
+                                                    </div>
+                                                </div>
+                                                <div class="product-info-bot">
+                                                    <p class="pib_desc">Phân loại: @itemCT.TenLH</p>
+                                                    <p class="pib_price">@string.Format("{0:n0}", itemCT.TongTien) đ</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="bot_order">
+                                <p>Thành tiền: <span>@string.Format("{0:n0}", item.TriGia) đ</span></p>
+
+                            </div>
+                    </li>
+                }
+            }
+        }
+
+
+
+    </ul>
+
+</div>
+
+
+@section Script {
+    <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+
+        const tabs = $$(".tab_item");
+        const contents = $$(".list_order");
+        const tabActive = ".tab_item.active";
+
+        tabs.forEach((item, index) => {
+            const content = contents[index];
+            item.onclick = function () {
+                $(".tab_item.active").classList.remove("active");
+                this.classList.add("active");
+                $(".list_order.active").classList.remove("active");
+                content.classList.add("active");
+            };
+        });
+    </script>
+
+}
+
+
+

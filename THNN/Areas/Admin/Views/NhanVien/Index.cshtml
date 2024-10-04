@@ -1,0 +1,106 @@
+﻿
+@model IEnumerable<THNN.Models.NhanVien>
+
+
+
+@{
+    ViewBag.Title = "Danh Sách Nhân Viên";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+<main>
+    <section class="service_section">
+        <div class="container-fluid">
+
+            <h2>Danh sách nhân viên</h2>
+
+            <p>
+                <a href="~/Admin/NhanVien/ThemMoiNV">Thêm mới</a>
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        Mã Nhân Viên
+                    </th>
+                    <th>
+                        Họ Tên Nhân Viên
+                    </th>
+                    <th>
+                        Ngày Sinh
+                    </th>
+                    <th>
+                        Giới Tính
+                    </th>
+                    <th>
+                        Địa Chỉ
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Điện Thoại
+                    </th>
+                    <th>
+                        Hình Ảnh
+                    </th>
+                    <th>
+                        Tài Khoản
+                    </th>
+                    <th>
+                        Mật Khẩu
+                    </th>
+                    <th>
+                        Loại Nhân Viên
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    DateTime? date = item.NgaySinh;
+                    string ngaySinh = date?.ToString("dd-MM-yyyy");
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaNV)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoTen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => ngaySinh)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GioiTinh)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DiaChi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoDT)
+                        </td>
+                        <td>
+                            <img src="@item.HinhAnh" style="height:50px;width:50px" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaiKhoan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MatKhau)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LoaiNV)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Cập nhật", "CapNhatNV", new { id = item.MaNV }) |
+                            @Html.ActionLink("Xóa", "XoaNV", new { id = item.MaNV })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </section>
+</main>
+

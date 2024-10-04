@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4e8c21aa68ae40a888afa1c164c1a695" Name="Diagram1">
+        <EntityTypeShape EntityType="THNNModel.ChuongTrinhGG" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.CTDonDatHang" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.CTPhieuNhap" Width="1.5" PointX="8.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.DonDatHang" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.HoaDon" Width="1.5" PointX="6" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.KhachHang" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.LoaiHang" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.NhaCungCap" Width="1.5" PointX="3.75" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.NhanVien" Width="1.5" PointX="3.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.PhieuNhap" Width="1.5" PointX="6" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.SanPham" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="THNNModel.sysdiagram" Width="1.5" PointX="5.75" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="THNNModel.FK_SP_CTGG" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_CTDDH_DDH" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_CTDDH_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_PN_PN" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_PN_SP" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_DDH_KH" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_HD_DDH" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_HD_NV" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_SP_LH" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_PN_NCC" ManuallyRouted="false" />
+        <AssociationConnector Association="THNNModel.FK_PN_NV" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

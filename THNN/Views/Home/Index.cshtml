@@ -1,0 +1,364 @@
+﻿
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/LayoutUser.cshtml";
+    ViewBag.active = 1;
+
+}
+@section Style {
+
+    .best-saler__heading {
+    font-size: 2rem;
+    }
+
+    .content {
+    padding-top: 161px;
+    width: 100%;
+    background-color: #f5f5f5;
+    }
+
+    .sales-tw_sub-item__sub-head {
+    line-height: 26px;
+    margin-right: 10px;
+    }
+
+    .sales-tw__link {
+    flex: 0 0 20%;
+    display:flex;
+    }
+
+
+    .sales-tw__sub-item {
+    width:100%;
+    }
+
+    .sales-tw_sub-item__add {
+    margin-top:10px;
+    }
+
+    .sales-tw__sub-item-content {
+    flex:1;}
+
+    .sales-tw_sub-item__sub-head {
+    flex:1;}
+
+    .sales-tw__sub-item-content {
+    display:flex;
+    flex-direction:column;}
+
+
+
+
+}
+
+@section render_history_search {
+    @{
+        if (@ViewBag.getControllerHome.SearchList != null)
+        {
+            <ul class="header_history-list">
+                @foreach (var item in @ViewBag.getControllerHome.SearchList)
+                {
+                    <li class="header_history-item">
+                        <a href="">
+                            <span>@item</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+    }
+
+
+
+}
+
+
+@{
+    List<THNN.Models.ChuongTrinhGG> listCTGG = (List<THNN.Models.ChuongTrinhGG>)Session["ListCTGG"];
+
+    var mainSlider = listCTGG[0];
+    <div class="slider__main">
+        <div class="slider__main-top">
+            <div class="slider__control prev">
+                <i class="fas fa-chevron-circle-left"></i>
+            </div>
+            <div class="slider__img-main">
+                <img src="@mainSlider.Poster" alt="">
+            </div>
+            <div class="slider__control next">
+                <i class="fas fa-chevron-circle-right"></i>
+            </div>
+
+
+            <div class="slider__main-bot">
+                @for (var i = 0; i < listCTGG.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        <label class="slider__main-bot-item active" for="">
+                            <img src="@listCTGG[i].Poster" alt="">
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="slider__main-bot-item" for="">
+                            <img src="@listCTGG[i].Poster" alt="">
+                        </label>
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+<div class="best-saler">
+    <h3 class="best-saler__heading">Sản phẩm ưa chuộng</h3>
+    <ul class="best-saler__list">
+        <li class="best-saler__item">
+            <a href="" class="best-saler_item-link">
+                <img src="~/assets/img/img-best-saler/rau.jpg" alt="">
+                <span>Salad</span>
+            </a>
+        </li>
+        <li class="best-saler__item">
+            <a href="" class="best-saler_item-link">
+                <img src="~/assets/img/img-best-saler/susu.jpg" alt="">
+                <span>Su Su</span>
+            </a>
+        </li>
+        <li class="best-saler__item">
+            <a href="" class="best-saler_item-link">
+                <img src="~/assets/img/img-best-saler/orange.jpg" alt="">
+                <span>Cam</span>
+            </a>
+        </li>
+        <li class="best-saler__item">
+            <a href="" class="best-saler_item-link">
+                <img src="~/assets/img/img-best-saler/water-melon.jpg" alt="">
+                <span>Dưa hấu</span>
+            </a>
+        </li>
+        <li class="best-saler__item">
+            <a href="" class="best-saler_item-link">
+                <img src="~/assets/img/img-best-saler/whole-cashew.jpg" alt="">
+                <span>Hạt điều</span>
+            </a>
+        </li>
+        <li class="best-saler__item">
+            <a href="" class="best-saler_item-link">
+                <img src="~/assets/img/img-best-saler/dragon-fruit.jpg" alt="">
+                <span>Thanh long</span>
+            </a>
+        </li>
+        <li class="best-saler__item">
+            <a href="" class="best-saler_item-link">
+                <img src="~/assets/img/img-best-saler/cachua.jpg" alt="">
+                <span>Cà chua</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+@{
+    List<THNN.Models.CTGG_ListProduct> listSalesProgram = (List<THNN.Models.CTGG_ListProduct>)Session["ListProgram"];
+    foreach (var item in listSalesProgram)
+    {
+    <div class="sales-market">
+
+
+        <div style="position: absolute; top: -35px; right: 0; font-weight: 700; font-size: 20px; color: #d70018; font-style: italic; ">
+            @{
+                DateTime? specificDate = item.ThoiGianBD;
+                string formattedDate = specificDate?.ToString("dd/MM/yyyy");
+                DateTime? specificDate1 = item.ThoiGianKT;
+                string formattedDate1 = specificDate1?.ToString("dd/MM/yyyy");
+            }
+
+            <p>@formattedDate - @formattedDate1</p>
+        </div>
+        <div class="sales-maket__header-sales">
+            <div>
+                <h2 style="font-size: 36px;">@item.TenSuKien</h2>
+            </div>
+
+        </div>
+        <div class="sales-maket__list-pr">
+            @{
+                for (var i = 0; i < item.ListSP_LH.Count; i++)
+                {
+                    if (i < 4)
+                    {
+                        THNN.Models.SP_LH itemProduct = item.ListSP_LH[i];
+
+
+                        var giaBanOri = itemProduct.GiaBanSP - (itemProduct.GiaBanSP * (item.PhanTram / 100));
+                        string giaBan = string.Format("{0:n0}", giaBanOri);
+                        string giaBanSales = string.Format("{0:n0}", itemProduct.GiaBanSP);
+                        <a href="@Url.Action("DetailProduct","Product", new { @TenSP = itemProduct.TenSP })" class="sales-tw__link">
+                            <div class="sales-tw__sub-item">
+                                <i class="far fa-heart sales-tw__sub-icon"></i>
+                                <div class="sales-tw__sub-item-img">
+                                    <img src="@itemProduct.HinhAnh" alt="">
+                                </div>
+                                <div class="sales-tw__sub-item-content">
+                                    <p class="sales-tw_sub-item__sub-shead">
+                                        @itemProduct.TenLH
+                                    </p>
+                                    <h3 class="sales-tw_sub-item__sub-head">
+                                        @itemProduct.TenSP
+                                    </h3>
+
+                                    <span class="sales-tw_sub-item__sub-prices"></span>
+                                    <div class="sales-tw_sub-item__prices">
+                                        <span class="sales-tw_sub-item__sub-prices">@giaBan đ</span>
+                                        <span class="sales-tw_sub-item__sales-prices">@giaBanSales đ</span>
+                                    </div>
+
+                                </div>
+
+                                <button class="sales-tw_sub-item__add">Chọn Mua</button>
+
+                                <div class="item__sale-off">
+                                    <span class="sale-off-percent">@item.PhanTram %</span>
+                                    <span class="sale-off-label">GIẢM</span>
+                                </div>
+                            </div>
+                        </a>
+
+                    }
+                }
+            }
+        </div>
+        <div class="sales-market__bottom">
+            <span data-id-ct="@item.MaCT" href="">Xem tất cả sản phẩm</span>
+            <i class="fas fa-sort-down"></i>
+        </div>
+
+    </div>
+
+    }
+}
+
+
+
+
+
+<div class="sales-this-week">
+    <h2 class="sales-this-week__heading">TẤT CẢ SẢ PHẨM</h2>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="sales-this-week__item">
+                <div class="sales-tw__sub-list vet">
+                    @{
+                        if (@ViewBag.getControllerHome.DanhSachSanPham != null)
+                        {
+
+                            foreach (var data in ViewBag.getControllerHome.DanhSachSanPham)
+                            {
+                                THNN.Models.SP_LH_CTGG item = data;
+                                string giaBan = "";
+                                string giaBanSales = "";
+                                var phanTramSales = item.PhanTram * 100;
+                                if (item.PhanTram.HasValue)
+                                {
+                                    var giaBanOri = item.GiaBanSP - (item.GiaBanSP * (phanTramSales / 100));
+                                    giaBan = string.Format("{0:n0}", giaBanOri);
+                                    giaBanSales = string.Format("{0:n0}", item.GiaBanSP);
+                                }
+                                else
+                                {
+                                    var giaBanOri = item.GiaBanSP;
+                                    giaBan = string.Format("{0:n0}", giaBanOri);
+
+                                }
+
+
+                                <a href="@Url.Action("DetailProduct","Product",new { @TenSP = item.TenSP })" class="sales-tw__link">
+                                    <div class="sales-tw__sub-item">
+                                        <i class="far fa-heart sales-tw__sub-icon"></i>
+                                        <div class="sales-tw__sub-item-img">
+                                            <img src="@item.HinhAnh" alt="">
+                                        </div>
+                                        <div class="sales-tw__sub-item-content">
+                                            <p class="sales-tw_sub-item__sub-shead">
+                                                @item.TenLH
+                                            </p>
+                                            <h3 class="sales-tw_sub-item__sub-head">
+                                                @item.TenSP
+                                            </h3>
+                                            <div class="sales-tw_sub-item__prices">
+                                                <span class="sales-tw_sub-item__sub-prices">@giaBan đ</span>
+                                                @if (!giaBanSales.Equals(""))
+                                                {
+                                                    <span class="sales-tw_sub-item__sales-prices">@giaBanSales đ</span>
+                                                }
+
+                                            </div>
+
+                                        </div>
+
+                                        <button class="sales-tw_sub-item__add">Chọn Mua</button>
+
+
+                                        @if (item.PhanTram.HasValue)
+                                        {
+                                            <div class="item__sale-off">
+                                                <span class="sale-off-percent">@phanTramSales %</span>
+                                                <span class="sale-off-label">GIẢM</span>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </a>
+
+                            }
+                        }
+                    }
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Script {
+    <script src="~/assets/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var sliderMainChoice = document.querySelector(".slider__img-main img")
+        sliderMainChoice.addEventListener("click", function () {
+            const SearchTerm = this.getAttribute("src");
+
+            $.ajax({
+                type: "POST",
+                url: "/Search/SearchOnSlider",
+                data: JSON.stringify({ search: SearchTerm }),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    window.location.href = "/Search";
+                },
+                error: function (error) {
+                    console.error("Error occurred during AJAX request:", error);
+                },
+
+            });
+        })
+
+
+
+    </script>
+
+}
+

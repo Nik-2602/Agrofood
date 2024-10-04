@@ -1,0 +1,2232 @@
+﻿@model IEnumerable<THNN.Models.HoaDon>
+
+
+@{
+    ViewBag.Title = "Thống kê";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+@section Style {
+
+
+}
+
+
+
+<main>
+    <section class="service_section">
+
+
+        <h2>Thống Kê</h2>
+
+        <div class="container-fluid">
+
+            <div style="margin-bottom: 20px; margin-top: 16px; display: flex; justify-content: space-between; align-items: center; ">
+
+                <div class="groupLeftStatisticalFor">
+                    <div style="display: flex; align-items: center;" class="groupStatisticalFor">
+                        <p style="margin: 0 10px 0 0; font-size: 20px;">Thống Kê Theo</p>
+                        <select class="selectedStatiticalFor">
+                            <option selected>Đơn Đặt Hàng</option>
+                            <option>Loại Hàng</option>
+                            <option>Sản Phẩm</option>
+                            <option>Nhân Viên</option>
+                            <option>Chương Trình Giảm Giá</option>
+
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: center;margin-top:16px;" class="groupStatisticalFor">
+                        <p style="margin: 0 10px 0 0; font-size: 20px;">Xuất Biểu Đồ</p>
+                        <select class="selectedChartStatitical">
+                            <option selected> -- Chọn --</option>
+                            <option>Biểu Đồ Đường</option>
+                        </select>
+
+                        <button id="btnDelChart" style="margin-left: 16px; visibility: hidden;">Xóa Biểu Đồ</button>
+                    </div>
+                </div>
+
+
+                <div class="groupLinkExprot">
+                    <a data-type-report="Excel" href="#">Xuất file Excel</a> |
+                    <a data-type-report="PDF" href="#">Xuất file PDF</a> |
+                    <a data-type-report="Word" href="#">Xuất file Word</a> |
+                    <a data-type-report="Image" href="#">Xuất file Image</a>
+                </div>
+
+
+            </div>
+
+            <div>
+                <div class="body_statistical">
+
+                    <div class="filter_box-statistical">
+
+                        <div class="search_report_for">
+
+
+                            <div style="display:flex; align-items:center;">
+                                <p>Tìm Kiếm Theo</p>
+
+
+                                <select class="search_for" name="search_for" id="">
+                                    <option value="Chọn">-- Chọn --</option>
+                                    <option value="Mã Hóa Đơn">Mã Hóa Đơn</option>
+                                    <option value="Mã Đơn Đặt hàng">Mã Đơn Đặt Hàng</option>
+                                    <option value="Mã Nhân Viên">Mã Nhân Viên</option>
+                                </select>
+                            </div>
+
+
+                            <div class="search_for_group">
+                                <div class="search_for_group_box"></div>
+                                <div class="search_for_group_box">
+                                    <input class=" form-control" name="searchMaHD" type="text" placeholder="Nhập mã hóa đơn" />
+                                    <button type="submit">Lọc</button>
+                                </div>
+
+                                <div class="search_for_group_box">
+                                    <input class=" form-control" name="searchMaDDH" type="text" placeholder="Nhập mã đơn đặt hàng" />
+                                    <button type="submit">Lọc</button>
+                                </div>
+
+                                <div class="search_for_group_box">
+                                    <input class=" form-control" name="searchMaNV" type="text" placeholder="Nhập mã nhân viên" />
+                                    <button type="submit">Lọc</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="group_filter-statistical">
+                            <p3 class="header_filter">Lọc Theo  <button id="btnDelFilter" style="visibility: hidden; font-size: 14px; margin-left: 89px; transform: translateY(-2px); ">Hủy Lọc</button></p3>
+                            
+
+                            <div class="form-check">
+                                <input class="form-check-input" value="yesterdayFilter" type="radio" name="filterData" id="filterYesterday">
+                                <label class="form-check-label" for="filterYesterday">
+                                    Ngày hôm qua
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" value="nowFilter" type="radio" name="filterData" id="filterDay">
+                                <label class="form-check-label" for="filterDay">
+                                    Ngày hiện tại
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" value="monthNowFilter" type="radio" name="filterData" id="filterMonth">
+                                <label class="form-check-label" for="filterMonth">
+                                    Tháng hiện tại
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" value="lastMonthFilter" type="radio" name="filterData" id="filterLastMonth">
+                                <label class="form-check-label" for="filterLastMonth">
+                                    Tháng trước
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" value="yearNowFilter" type="radio" name="filterData" id="filterYear">
+                                <label class="form-check-label" for="filterYear">
+                                    Năm hiện tại
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" value="lastYearFilter" type="radio" name="filterData" id="filterLastYear">
+                                <label class="form-check-label" for="filterLastYear">
+                                    Năm trước
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" value="anotherTimeFilter" type="radio" name="filterData" id="filterPeriodTime">
+                                <label class="form-check-label" for="filterPeriodTime">
+                                    Khoảng thời gian
+                                </label>
+
+                                <div class="search_for-date">
+                                    @{
+                                        DateTime specificDate = new DateTime(1991, 01, 01);
+                                        string formattedDate = specificDate.ToString("yyyy-MM-dd");
+                                        <input class="input-control form-control" name="NgayBD" value="@formattedDate" type="date" />
+                                    }
+                                    <span>Đến</span>
+                                    @{
+                                        DateTime specificDate1 = new DateTime(1991, 01, 01);
+                                        string formattedDate1 = specificDate.ToString("yyyy-MM-dd");
+                                        <input class="input-control form-control" name="NgayKT" value="@formattedDate1" type="date" />
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="table_statistical active hoaDonStatistical">
+                        <div class="chart_statistical chartArea" id="chartAreaContainer" style="height: 370px; width: 100%; margin-bottom: 40px;"></div>
+
+
+                        @if (Model != null)
+                        {
+
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Mã Hóa Đơn
+                                    </th>
+                                    <th>
+                                        Mã Đơn Đặt Hàng
+                                    </th>
+                                    <th>
+                                        Mã Nhân Viên
+                                    </th>
+                                    <th>
+                                        Ngày Bán
+                                    </th>
+                                    <th>
+                                        Trị Giá
+                                        <span>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M11.332 2.31567V14.3157" stroke="#718096"
+                                                      stroke-width="1.5" stroke-linecap="round"
+                                                      stroke-linejoin="round"></path>
+                                                <path d="M6.66602 12.3157L4.66602 14.3157L2.66602 12.3157"
+                                                      stroke="#718096" stroke-width="1.5" stroke-linecap="round"
+                                                      stroke-linejoin="round"></path>
+                                                <path d="M4.66602 14.3157V2.31567" stroke="#718096"
+                                                      stroke-width="1.5" stroke-linecap="round"
+                                                      stroke-linejoin="round"></path>
+                                                <path d="M13.332 4.31567L11.332 2.31567L9.33203 4.31567"
+                                                      stroke="#718096" stroke-width="1.5" stroke-linecap="round"
+                                                      stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+
+                                @{var tongTienHD = 0;}
+                                @foreach (var item in Model)
+                                {
+                                    DateTime? date = item.NgayBan;
+                                    string ngayBan = date?.ToString("dd-MM-yyyy");
+                                    tongTienHD += item.TriGia;
+                                    string formatGiaBan = string.Format("{0:n0}", item.TriGia);
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaHD)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaDDH)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MaNV)
+                                        </td>
+                                        <td>
+                                            @ngayBan
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => formatGiaBan)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Xem", "DetailHoaDon", new { keySearch = item.MaHD })
+                                        </td>
+
+
+                                    </tr>
+                                }
+
+                            </table>
+                            string formatTongTienHD = string.Format("{0:n0}", tongTienHD);
+                            <p class="tongTien">Tổng tiền: <span style="color: #d0011b; font-weight: 600;"> @formatTongTienHD đ</span> </p>
+                        }
+                    </div>
+
+                    <div class="table_statistical nhanVienStatistical">
+
+                        <div class="chart_statistical chartColumn" id="chartColumnContainer" style="height: 370px; width: 100%; margin-bottom: 40px;"></div>
+                        <div class="chart_statistical chartPie" id="chartPieContainer" style="height: 370px; width: 100%; margin-bottom: 40px;"></div>
+
+
+                        @{
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Mã Nhân Viên
+                                    </th>
+                                    <th>
+                                        Họ Tên Nhân Viên
+                                    </th>
+                                    <th>
+                                        Số Lượng Hóa Đơn Tạo
+                                    </th>
+                                    <th>
+                                        Tổng Tiền
+                                    </th>
+                                    <th></th>
+
+                                </tr>
+
+                                @{var tongTienNV = 0;
+                                    var listDoanhThuNhanVien = ViewBag.DoanhThuNV as List<THNN.Models.DoanhThuNhanVien>;
+                                }
+                                @if (listDoanhThuNhanVien != null)
+                                {
+                                    foreach (var item in listDoanhThuNhanVien)
+                                    {
+                                        tongTienNV += item.TongTien;
+                                        string formatGiaBan = string.Format("{0:n0}", item.TongTien);
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaNV)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.HoTen)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => formatGiaBan)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Xem", "DetailNhanVien", new { keySearch = item.MaNV })
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+                            string formatTongTienNV = string.Format("{0:n0}", tongTienNV);
+                            <p class="tongTien">Tổng tiền: <span style="color: #d0011b; font-weight: 600;"> @formatTongTienNV đ</span> </p>
+                        }
+                    </div>
+
+                    <div class="table_statistical loaiHangStatistical">
+
+                        <div class="chart_statistical chartColumn" id="chartColumnContainer" style="height: 370px; width: 100%; margin-bottom: 40px;"></div>
+                        <div class="chart_statistical chartPie" id="chartPieContainer" style="height: 370px; width: 100%; margin-bottom: 40px;"></div>
+
+                        @{
+
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Mã Loại Hàng
+                                    </th>
+                                    <th>
+                                        Tên Loại Hàng
+                                    </th>
+                                    <th>
+                                        Số Lượng Đã Bán
+                                    </th>
+                                    <th>
+                                        Tổng Tiền
+                                    </th>
+                                    <th></th>
+                                </tr>
+
+                                @{var tongTienLH = 0;
+                                    var listDoanhThuLH = ViewBag.DoanhThuLH as List<THNN.Models.DoanhThuLoaiHang>;
+                                }
+                                @if (listDoanhThuLH != null)
+                                {
+                                    foreach (var item in listDoanhThuLH)
+                                    {
+                                        tongTienLH += item.TongTien;
+                                        string formatGiaBan = string.Format("{0:n0}", item.TongTien);
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaLH)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenLH)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => formatGiaBan)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Xem", "DetailLoaiHang", new { keySearch = item.MaLH })
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+
+
+
+                            </table>
+                            string formatTongTienLH = string.Format("{0:n0}", tongTienLH);
+                            <p class="tongTien">Tổng tiền: <span style="color: #d0011b; font-weight: 600;"> @formatTongTienLH đ</span> </p>
+                        }
+                    </div>
+
+
+                    <div class="table_statistical sanPhamStatistical">
+
+                       
+                        <div class="chart_statistical chartPoint" id="chartPointContainer" style="height: 370px; width: 100%; margin-bottom: 40px;"></div>
+
+
+                        @{
+
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Mã Sản Phẩm
+                                    </th>
+                                    <th>
+                                        Tên Sản Phẩm
+                                    </th>
+                                    <th>
+                                        Tên Loại Hàng
+                                    </th>
+                                    <th>
+                                        Số Lượng Đã Bán
+                                    </th>
+                                    <th>
+                                        Tổng Tiền
+                                    </th>
+                                    <th></th>
+                                    
+
+                                </tr>
+
+                                @{var tongTienSP = 0;
+                                    var listDoanhThuSP = ViewBag.DoanhThuSP as List<THNN.Models.DoanhThuSanPham>;
+
+
+                                }
+
+                                @if (listDoanhThuSP != null)
+                                {
+
+                                    foreach (var item in listDoanhThuSP)
+                                    {
+                                        tongTienSP += item.TongTien;
+                                        string formatGiaBan = string.Format("{0:n0}", item.TongTien);
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenSP)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenLH)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => formatGiaBan)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Xem", "DetailSanPham", new { keySearch = item.MaSP })
+                                            </td>
+                                            
+
+
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+                            string formatTongTienSP = string.Format("{0:n0}", tongTienSP);
+                            <p class="tongTien">Tổng tiền: <span style="color: #d0011b; font-weight: 600;"> @formatTongTienSP đ</span> </p>
+                        }
+                    </div>
+
+                    <div class="table_statistical chuongTrinhGGStatistical">
+
+                        <div class="chart_statistical chartColumn" id="chartColumnContainer" style="height: 370px; width: 100%; margin-bottom: 40px;"></div>
+                        <div class="chart_statistical chartPie" id="chartPieContainer" style="height: 370px; width: 100%; margin-bottom: 40px;"></div>
+
+                        @{
+
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        Mã CTGG
+                                    </th>
+                                    <th>
+                                        Tên CTGG
+                                    </th>
+                                    <th>
+                                        Số Lượng Đã Bán
+                                    </th>
+                                    <th>
+                                        Tổng Tiền
+                                    </th>
+                                    <th></th>
+
+                                </tr>
+
+                                @{var tongTienCTGG = 0;
+                                    var listDoanhThuCTGG = ViewBag.DoanhThuCTGG as List<THNN.Models.DoanhThuCTGG>;
+
+                                }
+
+                                @if (listDoanhThuCTGG != null)
+                                {
+                                    foreach (var item in listDoanhThuCTGG)
+                                    {
+                                        tongTienCTGG += item.TongTien;
+                                        string formatGiaBan = string.Format("{0:n0}", item.TongTien);
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MaCT)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TenSuKien)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SoLuong)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => formatGiaBan)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Xem", "DetailChuongTrinhGiamGia", new { keySearch = item.MaCT })
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                            string formatTongTienCTGG = string.Format("{0:n0}", tongTienCTGG);
+                            <p class="tongTien">Tổng tiền: <span style="color: #d0011b; font-weight: 600;"> @formatTongTienCTGG đ</span> </p>
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+</main>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<script>
+    const select = document.querySelector(".search_for");
+    select.addEventListener("change", function () {
+        // Lấy giá trị của lựa chọn đã chọn
+        const value = select.options[select.selectedIndex].value;
+        const indexSelected = select.selectedIndex;
+        const listGroupBox = document.querySelector(".search_for_group").querySelectorAll(".search_for_group_box");
+        if (document.querySelector(".search_for_group_box.active") == null) {
+            listGroupBox[indexSelected].classList.add("active");
+
+        }
+        else {
+            document.querySelector(".search_for_group_box.active").classList.remove("active");
+            listGroupBox[indexSelected].classList.add("active");
+        }
+
+
+
+    });
+
+</script>
+
+<script>
+
+    function formatDate(jsonDate) {
+        const timestamp = parseInt(jsonDate.match(/\d+/)[0], 10);
+
+        const date = new Date(timestamp);
+
+        const formattedDate = String(date.getDate()).padStart(2, '0') + '-' +
+            String(date.getMonth() + 1).padStart(2, '0') + '-' +
+            date.getFullYear();
+
+        return formattedDate;
+    }
+
+    function formatNumber(value) {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function changeRadioValue(valueOfRadioCheck) {
+        var contentValueOfRadioCheck = "";
+        switch (valueOfRadioCheck) {
+            case "yesterdayFilter":
+                contentValueOfRadioCheck = "Ngày hôm qua";
+                break;
+            case "nowFilter":
+                contentValueOfRadioCheck = "Ngày hiện tại";
+                break;
+            case "monthNowFilter":
+                contentValueOfRadioCheck = "Tháng hiện tại";
+                break;
+            case "lastMonthFilter":
+                contentValueOfRadioCheck = "Tháng trước";
+                break;
+            case "yearNowFilter":
+                contentValueOfRadioCheck = "Năm hiện tại";
+                break;
+            case "lastYearFilter":
+                contentValueOfRadioCheck = "Năm trước";
+                break;
+        }
+        return contentValueOfRadioCheck;
+    }
+
+    function getValue(valueString) {
+        var valueWithoutCurrency = valueString.includes('đ') ? valueString.replace(/đ/g, '') : valueString;
+        var valueWithoutCommas = valueWithoutCurrency.includes(',') ? valueWithoutCurrency.replace(/,/g, '') : valueWithoutCurrency;
+        var cleanedValue = valueWithoutCommas.includes('.') ? valueWithoutCommas.replace(/\./g, '') : valueWithoutCommas;
+        var value = parseInt(cleanedValue, 10);
+        if (isNaN(value)) {
+            return valueString;
+        }
+
+        return value;
+    }
+
+    function parseDate(dateString) {
+        var parts = dateString.split("-");
+        return new Date(parts[2], parts[1] - 1, parts[0]); // Tháng trong JavaScript bắt đầu từ 0
+    }
+
+    function renderDataTable(contentTable, data) {
+        var sumOfToTal = 0;
+
+        if (contentTable == "Đơn Đặt Hàng") {
+            var htmlTableHoaDon;
+            htmlTableHoaDon = document.querySelector(".table_statistical .table tbody");
+            htmlTableHoaDon.innerHTML = `
+     <tr>
+         <th>Mã Hóa Đơn</th>
+         <th>Mã Đơn Đặt Hàng</th>
+         <th>Mã Nhân Viên</th>
+         <th>Ngày Bán</th>
+         <th>Trị Giá</th>
+         <th></th>
+     </tr>
+ `;
+            for (var i = 0; i < data.length; i++) {
+                var row = document.createElement('tr');
+                sumOfToTal += parseInt(data[i].triGia);
+                row.innerHTML = `
+         <td>${data[i].maHoaDon}</td>
+         <td>${data[i].maDonDatHang}</td>
+         <td>${data[i].maNhanVien}</td>
+         <td>${data[i].ngayBan}</td>
+         <td>${data[i].triGia}</td>
+         <td></td>
+     `;
+                htmlTableHoaDon.appendChild(row);
+            }
+            document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+        }
+        if (contentTable == "Loại Hàng") {
+            var htmlTableHoaDon;
+            htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+            htmlTableHoaDon.innerHTML = `
+     <tr>
+         <th>Mã Loại Hàng</th>
+         <th>Tên Loại Hàng</th>
+         <th>Số Lượng Đã Bán</th>
+         <th>Tổng Tiền</th>
+         <th></th>
+     </tr>
+ `;
+            for (var i = 0; i < data.length; i++) {
+                var row = document.createElement('tr');
+                sumOfToTal += parseInt(data[i].triGia);
+                row.innerHTML = `
+         <td>${data[i].maLH}</td>
+         <td>${data[i].tenLH}</td>
+         <td>${data[i].soLuongBan}</td>
+         <td>${data[i].triGia}</td>
+         <td></td>
+     `;
+                htmlTableHoaDon.appendChild(row);
+            }
+            document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+        }
+        if (contentTable == "Sản Phẩm") {
+            var htmlTableHoaDon;
+            htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+            htmlTableHoaDon.innerHTML = `
+     <tr>
+         <th>Mã Sản Phẩm</th>
+         <th>Tên Sản Phẩm</th>
+         <th>Tên Loại Hàng</th>
+         <th>Số Lượng Đã Bán</th>
+         <th>Tổng Tiền</th>
+         <th></th>
+     </tr>
+ `;
+            for (var i = 0; i < data.length; i++) {
+                var row = document.createElement('tr');
+                sumOfToTal += parseInt(data[i].TongTien);
+                row.innerHTML = `
+         <td>${data[i].maSP}</td>
+         <td>${data[i].tenSP}</td>
+         <td>${data[i].tenLH}</td>
+         <td>${data[i].soLuongBan}</td>
+         <td>${data[i].triGia}</td>
+         <td></td>
+     `;
+                htmlTableHoaDon.appendChild(row);
+            }
+            document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+        }
+        if (contentTable == "Nhân Viên") {
+            var htmlTableHoaDon;
+            htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+            htmlTableHoaDon.innerHTML = `
+     <tr>
+         <th>Mã Nhân Viên</th>
+         <th>Họ Tên</th>
+         <th>Số Lượng Hóa Đơn Tạo</th>
+         <th>Tổng Tiền</th>
+         <th></th>
+     </tr>
+ `;
+            for (var i = 0; i < data.length; i++) {
+                var row = document.createElement('tr');
+                sumOfToTal += parseInt(data[i].triGia);
+                row.innerHTML = `
+         <td>${data[i].maNV}</td>
+         <td>${data[i].hoTenNV}</td>
+         <td>${data[i].soLuongBan}</td>
+         <td>${data[i].triGia}</td>
+         <td></td>
+     `;
+                htmlTableHoaDon.appendChild(row);
+            }
+            document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+        }
+        if (contentTable == "Chương Trình Giảm Giá") {
+            var htmlTableHoaDon;
+            htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+            htmlTableHoaDon.innerHTML = `
+     <tr>
+         <th>Mã Chương Trình</th>
+         <th>Tên Chương Trình</th>
+         <th>Số Lượng Đã Bán</th>
+         <th>Trị Giá</th>
+         <th></th>
+     </tr>
+ `;
+            for (var i = 0; i < data.length; i++) {
+                var row = document.createElement('tr');
+                sumOfToTal += parseInt(data[i].triGia);
+                row.innerHTML = `
+         <td>${data[i].maCTGG}</td>
+         <td>${data[i].tenCTGG}</td>
+         <td>${data[i].soLuongBan}</td>
+         <td>${data[i].triGia}</td>
+         <td></td>
+     `;
+                htmlTableHoaDon.appendChild(row);
+            }
+            document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+        }
+    }
+
+
+    var itemStatisticalFor = "Đơn Đặt Hàng";
+    var contentTableInHTMLNow = document.querySelectorAll(".table_statistical.active .table tbody tr");
+    var dataEntry = dataRenderChart(itemStatisticalFor, contentTableInHTMLNow)
+    /*statistical For*/
+    var hoaDonStatistical = document.querySelector(".hoaDonStatistical");
+    var nhanVienStatistical = document.querySelector(".nhanVienStatistical");
+    var loaiHangStatistical = document.querySelector(".loaiHangStatistical");
+    var sanPhamStatistical = document.querySelector(".sanPhamStatistical");
+    var chuongTrinhGGStatistical = document.querySelector(".chuongTrinhGGStatistical");
+    var selectedStatisticalFor = document.querySelector(".selectedStatiticalFor");
+
+    selectedStatisticalFor.addEventListener("change", function () {
+        var btnDelFilter = document.getElementById("btnDelFilter");
+        btnDelFilter.style.visibility = "hidden";
+        removerChart();
+        var itemSelectValue = selectedStatisticalFor.options[selectedStatisticalFor.selectedIndex].value;
+        itemStatisticalFor = itemSelectValue;
+        document.querySelector(".table_statistical.active").classList.remove("active");
+        document.querySelector(".search_for").innerHTML = "";
+        document.querySelector(".search_for_group").innerHTML = "";
+        document.querySelector(".selectedChartStatitical").innerHTML = "";
+        var selectedRenderChart = document.querySelector(".selectedChartStatitical");
+        switch (itemSelectValue) {
+            case "Đơn Đặt Hàng":
+                hoaDonStatistical.classList.add("active");
+                var html =
+                    `
+                             <option selected value="Chọn">-- Chọn --</option>
+                             <option value="Mã Hóa Đơn">Mã Hóa Đơn</option>
+                             <option value="Mã Đơn Đặt Hàng">Mã Đơn Đặt Hàng</option>
+                             <option value="Mã Nhân Viên">Mã Nhân Viên</option>
+                    `
+                document.querySelector(".search_for").innerHTML = html;
+
+                var html2 =
+                    `
+
+                            <div class="search_for_group_box ">
+                            </div>
+                            <div class="search_for_group_box">
+                                <input class=" form-control" name="searchMaHD" type="text" placeholder="Nhập mã hóa đơn" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                            <div class="search_for_group_box">
+                                <input class=" form-control" name="searchMaDDH" type="text" placeholder="Nhập mã đơn đặt hàng" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                            <div class="search_for_group_box">
+                                <input class=" form-control" name="searchMaNV" type="text" placeholder="Nhập mã nhân viên" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                    `
+                document.querySelector(".search_for_group").innerHTML = html2;
+
+                var html3 = `
+                        <option selected> -- Chọn --</option>
+                        <option>Biểu Đồ Đường</option>
+                `
+                document.querySelector(".selectedChartStatitical").innerHTML = html3;
+
+                selectedRenderChart.selectedIndex = 0;
+                break;
+            case "Loại Hàng":
+                loaiHangStatistical.classList.add("active");
+                var html =
+                    `
+                             <option selected value="Chọn">-- Chọn --</option>
+                             <option value="Mã Loại Hàng">Mã Loại Hàng</option>
+                             <option value="Tên Loại Hàng">Tên Loại Hàng</option>
+                    `
+                document.querySelector(".search_for").innerHTML = html;
+
+                var html2 =
+                    `
+
+                            <div class="search_for_group_box ">
+                            </div>
+                            <div class="search_for_group_box">
+                                <input class=" form-control" name="searchMaLH" type="text" placeholder="Nhập mã loại hàng" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                            <div class="search_for_group_box">
+                                <input class=" form-control" name="searchTenLH" type="text" placeholder="Nhập tên loại hàng" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                    `
+
+
+                document.querySelector(".search_for_group").innerHTML = html2;
+
+                var html3 = `
+                        <option selected> -- Chọn --</option>
+                        <option>Biểu Đồ Cột</option>
+                        <option>Biểu Đồ Tròn</option>
+                `
+                document.querySelector(".selectedChartStatitical").innerHTML = html3;
+
+                selectedRenderChart.selectedIndex = 0;
+                break;
+            case "Nhân Viên":
+                nhanVienStatistical.classList.add("active");
+                var html =
+                    `
+                             <option selected value="Chọn">-- Chọn --</option>
+                             <option value="Mã Nhân Viên">Mã Nhân Viên</option>
+                             <option value="Tên Nhân Viên">Tên Nhân Viên</option>
+                    `
+                document.querySelector(".search_for").innerHTML = html;
+                var html2 =
+                    `
+
+                        <div class="search_for_group_box ">
+</div>
+                        <div class="search_for_group_box">
+                                <input class=" form-control" name="searchMaNV" type="text" placeholder="Nhập mã nhân viên" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                            <div class="search_for_group_box">
+                                <input class=" form-control" name="searchTenNV" type="text" placeholder="Nhập tên nhân viên" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                    `
+                document.querySelector(".search_for_group").innerHTML = html2;
+
+                var html3 = `
+                        <option selected> -- Chọn --</option>
+                        <option>Biểu Đồ Cột</option>
+                        <option>Biểu Đồ Tròn</option>
+                `
+                document.querySelector(".selectedChartStatitical").innerHTML = html3;
+
+                selectedRenderChart.selectedIndex = 0;
+                break;
+            case "Chương Trình Giảm Giá":
+                chuongTrinhGGStatistical.classList.add("active");
+                var html =
+                    `
+                             <option selected value="Chọn">-- Chọn --</option>
+                             <option value="Mã Chương Trình">Mã Chương Trình</option>
+                             <option value="Tên Chương Trình">Tên Chương Trình</option>
+                    `
+                document.querySelector(".search_for").innerHTML = html;
+
+                var html2 =
+                    `
+
+                        <div class="search_for_group_box ">
+</div>
+                        <div class="search_for_group_box">
+                                <input class=" form-control" name="searchMaCTGG" type="text" placeholder="Nhập mã chương trình" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                            <div class="search_for_group_box">
+                                <input class=" form-control" name="searchTenCTGG" type="text" placeholder="Nhập tên chương trình" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                    `
+                document.querySelector(".search_for_group").innerHTML = html2;
+
+                var html3 = `
+                        <option selected> -- Chọn --</option>
+                        <option>Biểu Đồ Cột</option>
+                        <option>Biểu Đồ Tròn</option>
+                `
+                document.querySelector(".selectedChartStatitical").innerHTML = html3;
+
+                selectedRenderChart.selectedIndex = 0;
+                break;
+            case "Sản Phẩm":
+                sanPhamStatistical.classList.add("active");
+                var html =
+                    `
+                         <option selected value="Chọn">-- Chọn --</option>
+                         <option value="Mã Sản Phẩm">Mã Sản Phẩm</option>
+                         <option value="Tên Sản Phẩm">Tên Sản Phẩm</option>
+                          <option value="Tên Loại Hàng">Tên Loại Hàng</option>
+                `
+                document.querySelector(".search_for").innerHTML = html;
+
+                var html2 =
+                    `
+
+                        <div class="search_for_group_box "></div>
+                        <div class="search_for_group_box">
+                                <input class=" form-control" name="searchMaSP" type="text" placeholder="Nhập mã sản phẩm" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                            <div class="search_for_group_box">
+                                <input class=" form-control" name="searchTenSP" type="text" placeholder="Nhập tên sản phẩm" />
+                                <button type="submit">Lọc</button>
+                            </div>
+
+                             <div class="search_for_group_box">
+                                 <input class=" form-control" name="searchTenLH" type="text" placeholder="Nhập tên loại hàng" />
+                                 <button type="submit">Lọc</button>
+                             </div>
+
+                    `
+                document.querySelector(".search_for_group").innerHTML = html2;
+                selectedRenderChart.selectedIndex = 0;
+
+                var html3 = `
+                        <option selected> -- Chọn --</option>
+                        <option>Biểu Đồ Phân Tán</option>
+                `
+                document.querySelector(".selectedChartStatitical").innerHTML = html3;
+               
+                break;
+            default:
+                hoaDonStatistical.classList.add("active");
+                var html =
+                    `
+              <option selected value="Chọn">-- Chọn --</option>
+              <option value="Mã Hóa Đơn">Mã Hóa Đơn</option>
+              <option value="Mã Đơn Đặt Hàng">Mã Đơn Đặt Hàng</option>
+              <option value="Mã Nhân Viên">Mã Nhân Viên</option>
+     `
+                document.querySelector(".search_for").innerHTML = html;
+
+                var html2 =
+                    `
+
+             <div class="search_for_group_box ">
+             </div>
+             <div class="search_for_group_box">
+                 <input class=" form-control" name="searchMaHD" type="text" placeholder="Nhập mã hóa đơn" />
+                 <button type="submit">Lọc</button>
+             </div>
+
+             <div class="search_for_group_box">
+                 <input class=" form-control" name="searchMaDDH" type="text" placeholder="Nhập mã đơn đặt hàng" />
+                 <button type="submit">Lọc</button>
+             </div>
+
+             <div class="search_for_group_box">
+                 <input class=" form-control" name="searchMaNV" type="text" placeholder="Nhập mã nhân viên" />
+                 <button type="submit">Lọc</button>
+             </div>
+
+     `
+                document.querySelector(".search_for_group").innerHTML = html2;
+
+                var html3 = `
+                        <option selected> -- Chọn --</option>
+                        <option>Biểu Đồ Đường</option>
+                `
+                document.querySelector(".selectedChartStatitical").innerHTML = html3;
+                selectedRenderChart.selectedIndex = 0;
+                
+                break;
+        }
+        if (document.querySelector('input[name="filterData"]:checked') != null) {
+            document.querySelector('input[name="filterData"]:checked').checked = false;
+        }
+        document.querySelector(".search_for-date").style.display = "none";
+
+        var contentTableInHTMLNow = document.querySelectorAll(".table_statistical.active .table tbody tr");
+        dataEntry = dataRenderChart(itemStatisticalFor, contentTableInHTMLNow)
+
+
+
+    })
+
+
+
+    /*filter*/
+    var listRadioFilter = document.querySelectorAll('input[name="filterData"]');
+    listRadioFilter.forEach((item, index) => {
+
+/*        
+        dataEntry = dataRenderChart(itemStatisticalFor, contentTable);*/
+        item.addEventListener('click', function () {
+            var valueOfRadioCheck = item.value;
+            var contentValueOfRadioCheck = changeRadioValue(valueOfRadioCheck);
+            var contentTable = document.querySelector(".selectedStatiticalFor").value;
+            var valueDateBD = document.querySelector("input[name='NgayBD']").value;
+            var valueDateKT = document.querySelector("input[name='NgayKT']").value;
+            var selectedRenderChart = document.querySelector(".selectedChartStatitical");
+            selectedRenderChart.selectedIndex = 0;
+            removerChart();
+            var dataRequest = {
+                type: contentValueOfRadioCheck,
+                table: contentTable,
+                NgayBD: valueDateBD,
+                NgayKT: valueDateKT
+            }
+
+
+            $.ajax({
+                type: "POST",
+                url: "/ThongKe/FilterData",
+                data: JSON.stringify(dataRequest),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    var data = response.data;
+                    var sumOfToTal = 0;
+
+                    // Kiểm tra contentTable và thiết lập HTML cho bảng nếu cần
+                    if (contentTable == "Đơn Đặt Hàng") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Hóa Đơn</th>
+                            <th>Mã Đơn Đặt Hàng</th>
+                            <th>Mã Nhân Viên</th>
+                            <th>Ngày Bán</th>
+                            <th>Trị Giá</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TriGia);
+                            row.innerHTML = `
+                            <td>${data[i].MaHD}</td>
+                            <td>${data[i].MaDDH}</td>
+                            <td>${data[i].MaNV}</td>
+                            <td>${formatDate(data[i].NgayBan)}</td>
+                            <td>${formatNumber(data[i].TriGia)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+                    }
+                    if (contentTable == "Loại Hàng") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Loại Hàng</th>
+                            <th>Tên Loại Hàng</th>
+                            <th>Số Lượng Đã Bán</th>
+                            <th>Tổng Tiền</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TongTien);
+                            row.innerHTML = `
+                            <td>${data[i].MaLH}</td>
+                            <td>${data[i].TenLH}</td>
+                            <td>${data[i].SoLuong}</td>
+                            <td>${formatNumber(data[i].TongTien)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+                    }
+                    if (contentTable == "Sản Phẩm") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Sản Phẩm</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Tên Loại Hàng</th>
+                            <th>Số Lượng Đã Bán</th>
+                            <th>Tổng Tiền</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TongTien);
+                            row.innerHTML = `
+                            <td>${data[i].MaSP}</td>
+                            <td>${data[i].TenSP}</td>
+                            <td>${data[i].TenLH}</td>
+                            <td>${data[i].SoLuong}</td>
+                            <td>${formatNumber(data[i].TongTien)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                    }
+                    if (contentTable == "Nhân Viên") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Nhân Viên</th>
+                            <th>Họ Tên</th>
+                            <th>Số Lượng Hóa Đơn Tạo</th>
+                            <th>Tổng Tiền</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TongTien);
+                            row.innerHTML = `
+                            <td>${data[i].MaNV}</td>
+                            <td>${data[i].HoTen}</td>
+                            <td>${data[i].SoLuong}</td>
+                            <td>${formatNumber(data[i].TongTien)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                    }
+                    if (contentTable == "Chương Trình Giảm Giá") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Chương Trình</th>
+                            <th>Tên Chương Trình</th>
+                            <th>Số Lượng Đã Bán</th>
+                            <th>Trị Giá</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TongTien);
+                            row.innerHTML = `
+                            <td>${data[i].MaCT}</td>
+                            <td>${data[i].TenSuKien}</td>
+                            <td>${data[i].SoLuong}</td>
+                            <td>${formatNumber(data[i].TongTien)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                    }
+
+
+
+
+                },
+                error: function (error) {
+                    console.error("Error occurred during AJAX request:", error);
+                },
+
+            });
+
+
+
+            if (valueOfRadioCheck == "anotherTimeFilter") {
+                document.querySelector(".search_for-date").style.display = "flex";
+
+            }
+            else {
+                document.querySelector(".search_for-date").style.display = "none";
+            }
+
+            /*Huy lọc*/
+
+            if (valueOfRadioCheck != "") {
+                var btnDelFilter = document.getElementById("btnDelFilter");
+                btnDelFilter.style.visibility = "visible";
+                btnDelFilter.addEventListener("click", function () {
+                    item.checked = false;
+                    renderDataTable(itemStatisticalFor, dataEntry);
+                    btnDelFilter.style.visibility = "hidden";
+                    var selectedRenderChart = document.querySelector(".selectedChartStatitical");
+                    selectedRenderChart.selectedIndex = 0;
+                    removerChart();
+                })
+                
+            }
+
+        })
+    })
+
+    var DateBD = document.querySelector("input[name='NgayBD']");
+    var DateKT = document.querySelector("input[name='NgayKT']");
+    DateBD.addEventListener("change", function () {
+        var valueDateBD = DateBD.value;
+        var valueDateKT = DateKT.value;
+        var contentTable = document.querySelector(".selectedStatiticalFor").value;
+        var contentValueOfRadioCheck = "Khoảng thời gian";
+        var dataRequest = {
+            type: contentValueOfRadioCheck,
+            table: contentTable,
+            NgayBD: valueDateBD,
+            NgayKT: valueDateKT
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "/ThongKe/FilterData",
+            data: JSON.stringify(dataRequest),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                var data = response.data;
+                var sumOfToTal = 0;
+
+                // Kiểm tra contentTable và thiết lập HTML cho bảng nếu cần
+                if (contentTable == "Đơn Đặt Hàng") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                       <tr>
+                           <th>Mã Hóa Đơn</th>
+                           <th>Mã Đơn Đặt Hàng</th>
+                           <th>Mã Nhân Viên</th>
+                           <th>Ngày Bán</th>
+                           <th>Trị Giá</th>
+                           <th></th>
+                       </tr>
+                   `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TriGia);
+                        row.innerHTML = `
+                           <td>${data[i].MaHD}</td>
+                           <td>${data[i].MaDDH}</td>
+                           <td>${data[i].MaNV}</td>
+                           <td>${formatDate(data[i].NgayBan)}</td>
+                           <td>${formatNumber(data[i].TriGia)}</td>
+                           <td></td>
+                       `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+                }
+                if (contentTable == "Loại Hàng") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                       <tr>
+                           <th>Mã Loại Hàng</th>
+                           <th>Tên Loại Hàng</th>
+                           <th>Số Lượng Đã Bán</th>
+                           <th>Tổng Tiền</th>
+                           <th></th>
+                       </tr>
+                   `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TongTien);
+                        row.innerHTML = `
+                           <td>${data[i].MaLH}</td>
+                           <td>${data[i].TenLH}</td>
+                           <td>${data[i].SoLuong}</td>
+                           <td>${formatNumber(data[i].TongTien)}</td>
+                           <td></td>
+                       `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+                }
+                if (contentTable == "Sản Phẩm") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                       <tr>
+                           <th>Mã Sản Phẩm</th>
+                           <th>Tên Sản Phẩm</th>
+                           <th>Tên Loại Hàng</th>
+                           <th>Số Lượng Đã Bán</th>
+                           <th>Tổng Tiền</th>
+                           <th></th>
+                       </tr>
+                   `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TongTien);
+                        row.innerHTML = `
+                           <td>${data[i].MaSP}</td>
+                           <td>${data[i].TenSP}</td>
+                           <td>${data[i].TenLH}</td>
+                           <td>${data[i].SoLuong}</td>
+                           <td>${formatNumber(data[i].TongTien)}</td>
+                           <td></td>
+                       `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                }
+                if (contentTable == "Nhân Viên") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                       <tr>
+                           <th>Mã Nhân Viên</th>
+                           <th>Họ Tên</th>
+                           <th>Số Lượng Hóa Đơn Tạo</th>
+                           <th>Tổng Tiền</th>
+                           <th></th>
+                       </tr>
+                   `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TongTien);
+                        row.innerHTML = `
+                           <td>${data[i].MaNV}</td>
+                           <td>${data[i].HoTen}</td>
+                           <td>${data[i].SoLuong}</td>
+                           <td>${formatNumber(data[i].TongTien)}</td>
+                           <td></td>
+                       `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                }
+                if (contentTable == "Chương Trình Giảm Giá") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                       <tr>
+                           <th>Mã Chương Trình</th>
+                           <th>Tên Chương Trình</th>
+                           <th>Số Lượng Đã Bán</th>
+                           <th>Trị Giá</th>
+                           <th></th>
+                       </tr>
+                   `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TongTien);
+                        row.innerHTML = `
+                           <td>${data[i].MaCT}</td>
+                           <td>${data[i].TenSuKien}</td>
+                           <td>${data[i].SoLuong}</td>
+                           <td>${formatNumber(data[i].TongTien)}</td>
+                           <td></td>
+                       `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                }
+
+
+
+
+            },
+            error: function (error) {
+                console.error("Error occurred during AJAX request:", error);
+            },
+
+        });
+
+
+    })
+
+    DateKT.addEventListener("change", function () {
+        var valueDateBD = DateBD.value;
+        var valueDateKT = DateKT.value;
+        var contentTable = document.querySelector(".selectedStatiticalFor").value;
+        var contentValueOfRadioCheck = "Khoảng thời gian";
+        var dataRequest = {
+            type: contentValueOfRadioCheck,
+            table: contentTable,
+            NgayBD: valueDateBD,
+            NgayKT: valueDateKT
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "/ThongKe/FilterData",
+            data: JSON.stringify(dataRequest),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                var data = response.data;
+                var sumOfToTal = 0;
+
+                // Kiểm tra contentTable và thiết lập HTML cho bảng nếu cần
+                if (contentTable == "Đơn Đặt Hàng") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                   <tr>
+                       <th>Mã Hóa Đơn</th>
+                       <th>Mã Đơn Đặt Hàng</th>
+                       <th>Mã Nhân Viên</th>
+                       <th>Ngày Bán</th>
+                       <th>Trị Giá</th>
+                       <th></th>
+                   </tr>
+               `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TriGia);
+                        row.innerHTML = `
+                       <td>${data[i].MaHD}</td>
+                       <td>${data[i].MaDDH}</td>
+                       <td>${data[i].MaNV}</td>
+                       <td>${formatDate(data[i].NgayBan)}</td>
+                       <td>${formatNumber(data[i].TriGia)}</td>
+                       <td></td>
+                   `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+                }
+                if (contentTable == "Loại Hàng") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                   <tr>
+                       <th>Mã Loại Hàng</th>
+                       <th>Tên Loại Hàng</th>
+                       <th>Số Lượng Đã Bán</th>
+                       <th>Tổng Tiền</th>
+                       <th></th>
+                   </tr>
+               `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TongTien);
+                        row.innerHTML = `
+                       <td>${data[i].MaLH}</td>
+                       <td>${data[i].TenLH}</td>
+                       <td>${data[i].SoLuong}</td>
+                       <td>${formatNumber(data[i].TongTien)}</td>
+                       <td></td>
+                   `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+                }
+                if (contentTable == "Sản Phẩm") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                   <tr>
+                       <th>Mã Sản Phẩm</th>
+                       <th>Tên Sản Phẩm</th>
+                       <th>Tên Loại Hàng</th>
+                       <th>Số Lượng Đã Bán</th>
+                       <th>Tổng Tiền</th>
+                       <th></th>
+                   </tr>
+               `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TongTien);
+                        row.innerHTML = `
+                       <td>${data[i].MaSP}</td>
+                       <td>${data[i].TenSP}</td>
+                       <td>${data[i].TenLH}</td>
+                       <td>${data[i].SoLuong}</td>
+                       <td>${formatNumber(data[i].TongTien)}</td>
+                       <td></td>
+                   `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                }
+                if (contentTable == "Nhân Viên") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                   <tr>
+                       <th>Mã Nhân Viên</th>
+                       <th>Họ Tên</th>
+                       <th>Số Lượng Hóa Đơn Tạo</th>
+                       <th>Tổng Tiền</th>
+                       <th></th>
+                   </tr>
+               `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TongTien);
+                        row.innerHTML = `
+                       <td>${data[i].MaNV}</td>
+                       <td>${data[i].HoTen}</td>
+                       <td>${data[i].SoLuong}</td>
+                       <td>${formatNumber(data[i].TongTien)}</td>
+                       <td></td>
+                   `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                }
+                if (contentTable == "Chương Trình Giảm Giá") {
+                    var htmlTableHoaDon;
+                    htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                    htmlTableHoaDon.innerHTML = `
+                   <tr>
+                       <th>Mã Chương Trình</th>
+                       <th>Tên Chương Trình</th>
+                       <th>Số Lượng Đã Bán</th>
+                       <th>Trị Giá</th>
+                       <th></th>
+                   </tr>
+               `;
+                    for (var i = 0; i < data.length; i++) {
+                        var row = document.createElement('tr');
+                        sumOfToTal += parseInt(data[i].TongTien);
+                        row.innerHTML = `
+                       <td>${data[i].MaCT}</td>
+                       <td>${data[i].TenSuKien}</td>
+                       <td>${data[i].SoLuong}</td>
+                       <td>${formatNumber(data[i].TongTien)}</td>
+                       <td></td>
+                   `;
+                        htmlTableHoaDon.appendChild(row);
+                    }
+                    document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                }
+
+
+
+
+            },
+            error: function (error) {
+                console.error("Error occurred during AJAX request:", error);
+            },
+
+        });
+
+
+    })
+
+    /*Search*/
+
+    var selectedSearchFor = document.querySelector(".search_for");
+    selectedSearchFor.addEventListener("change", function () {
+        var itemSelectValue = selectedSearchFor.options[selectedSearchFor.selectedIndex].value;
+        var btnSearch = document.querySelector(".search_for_group_box.active button");
+
+        btnSearch.addEventListener("click", function () {
+            var contentTable = document.querySelector(".selectedStatiticalFor").value;
+            var contentSelectSearch = document.querySelector(".search_for").value;
+            var contentSearch = document.querySelector(".search_for_group_box.active input").value;
+
+            var selectedRenderChart = document.querySelector(".selectedChartStatitical");
+            selectedRenderChart.selectedIndex = 0;
+            removerChart();
+
+
+            var dataRequest = {
+                type: contentSelectSearch,
+                table: contentTable,
+                value: contentSearch
+            }
+            $.ajax({
+                type: "POST",
+                url: "/ThongKe/SearchData",
+                data: JSON.stringify(dataRequest),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    var data = response.data;
+                    var sumOfToTal = 0;
+
+                    // Kiểm tra contentTable và thiết lập HTML cho bảng nếu cần
+                    if (contentTable == "Đơn Đặt Hàng") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Hóa Đơn</th>
+                            <th>Mã Đơn Đặt Hàng</th>
+                            <th>Mã Nhân Viên</th>
+                            <th>Ngày Bán</th>
+                            <th>Trị Giá</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TriGia);
+                            row.innerHTML = `
+                            <td>${data[i].MaHD}</td>
+                            <td>${data[i].MaDDH}</td>
+                            <td>${data[i].MaNV}</td>
+                            <td>${formatDate(data[i].NgayBan)}</td>
+                            <td>${formatNumber(data[i].TriGia)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+                    }
+                    if (contentTable == "Loại Hàng") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Loại Hàng</th>
+                            <th>Tên Loại Hàng</th>
+                            <th>Số Lượng Đã Bán</th>
+                            <th>Tổng Tiền</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TongTien);
+                            row.innerHTML = `
+                            <td>${data[i].MaLH}</td>
+                            <td>${data[i].TenLH}</td>
+                            <td>${data[i].SoLuong}</td>
+                            <td>${formatNumber(data[i].TongTien)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+
+                    }
+                    if (contentTable == "Sản Phẩm") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Sản Phẩm</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Tên Loại Hàng</th>
+                            <th>Số Lượng Đã Bán</th>
+                            <th>Tổng Tiền</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TongTien);
+                            row.innerHTML = `
+                            <td>${data[i].MaSP}</td>
+                            <td>${data[i].TenSP}</td>
+                            <td>${data[i].TenLH}</td>
+                            <td>${data[i].SoLuong}</td>
+                            <td>${formatNumber(data[i].TongTien)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                    }
+                    if (contentTable == "Nhân Viên") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Nhân Viên</th>
+                            <th>Họ Tên</th>
+                            <th>Số Lượng Hóa Đơn Tạo</th>
+                            <th>Tổng Tiền</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TongTien);
+                            row.innerHTML = `
+                            <td>${data[i].MaNV}</td>
+                            <td>${data[i].HoTen}</td>
+                            <td>${data[i].SoLuong}</td>
+                            <td>${formatNumber(data[i].TongTien)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                    }
+                    if (contentTable == "Chương Trình Giảm Giá") {
+                        var htmlTableHoaDon;
+                        htmlTableHoaDon = document.querySelector(".table_statistical.active .table tbody");
+                        htmlTableHoaDon.innerHTML = `
+                        <tr>
+                            <th>Mã Chương Trình</th>
+                            <th>Tên Chương Trình</th>
+                            <th>Số Lượng Đã Bán</th>
+                            <th>Trị Giá</th>
+                            <th></th>
+                        </tr>
+                    `;
+                        for (var i = 0; i < data.length; i++) {
+                            var row = document.createElement('tr');
+                            sumOfToTal += parseInt(data[i].TongTien);
+                            row.innerHTML = `
+                            <td>${data[i].MaCT}</td>
+                            <td>${data[i].TenSuKien}</td>
+                            <td>${data[i].SoLuong}</td>
+                            <td>${formatNumber(data[i].TongTien)}</td>
+                            <td></td>
+                        `;
+                            htmlTableHoaDon.appendChild(row);
+                        }
+                        document.querySelector(".table_statistical.active .tongTien span").textContent = formatNumber(sumOfToTal) + " đ";
+                    }
+                },
+                error: function (error) {
+                    console.error("Error occurred during AJAX request:", error);
+                },
+
+            });
+
+
+            if (document.querySelector('input[name="filterData"]:checked') != null) {
+                document.querySelector('input[name="filterData"]:checked').checked = false;
+            }
+            document.querySelector(".search_for-date").style.display = "none";
+        })
+    })
+
+
+    /*Export */
+    var listLinkExport = document.querySelectorAll(".groupLinkExprot a");
+    listLinkExport.forEach((item, index) => {
+        item.addEventListener("click", function () {
+            var typeExport = this.getAttribute("data-type-report");
+            var contentTable = document.querySelector(".selectedStatiticalFor").value;
+
+            var dataRequest = {
+                ReportType: typeExport,
+                MainTable: contentTable
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/ThongKe/Reports",
+                data: JSON.stringify(dataRequest),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    var byteCharacters = atob(response.FileContents);
+                    var byteNumbers = new Array(byteCharacters.length);
+                    for (var i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    var byteArray = new Uint8Array(byteNumbers);
+                    var blob = new Blob([byteArray], { type: response.MimeType });
+
+                    // Tạo một liên kết tải xuống tạm thời
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = response.FileName;
+
+                    // Kích hoạt liên kết tải xuống
+                    document.body.appendChild(link);
+                    link.click();
+
+                    // Xóa liên kết tải xuống tạm thời
+                    document.body.removeChild(link);
+                }
+            })
+
+        })
+    })
+
+
+    /*Render Chart*/
+
+    renderChart();
+
+
+    function renderChart() {
+        var selectedRenderChart = document.querySelector(".selectedChartStatitical");
+        selectedRenderChart.addEventListener("change", function () {
+            removerChart();
+            var itemSelectValue = selectedRenderChart.options[selectedRenderChart.selectedIndex].value;
+
+            switch (itemSelectValue) {
+                case "Biểu Đồ Tròn":
+                    var pieChart = document.querySelector(".table_statistical.active .chart_statistical.chartPie");
+                    pieChart.classList.add("active");
+
+                    var contentTableSelected = document.querySelector(".selectedStatiticalFor").value;
+                    var headerChart = createHeaderChart(contentTableSelected,"Biểu Đồ Tròn");
+                    var contentTable = document.querySelectorAll(".table_statistical.active .table tbody tr");
+                    var data = [];
+                    data = dataRenderChart(contentTableSelected, contentTable);
+                    createPieChart(data, contentTableSelected, pieChart)
+                    pieChart.insertAdjacentElement('beforebegin', headerChart);
+                    break;
+                case "Biểu Đồ Cột":
+                    var columnChart = document.querySelector(".table_statistical.active .chart_statistical.chartColumn");
+                    columnChart.classList.add("active");
+                    var contentTableSelected = document.querySelector(".selectedStatiticalFor").value;
+                    var headerChart = createHeaderChart(contentTableSelected, "Biểu Đồ Cột");
+                    var contentTable = document.querySelectorAll(".table_statistical.active .table tbody tr");
+                    var data = [];
+                    data = dataRenderChart(contentTableSelected, contentTable);
+                    createColumnChart(data, contentTableSelected, columnChart);
+                    columnChart.insertAdjacentElement('beforebegin', headerChart);
+                    break;
+                case "Biểu Đồ Đường":
+                    console.log(1);
+                    var areaChart = document.querySelector(".table_statistical.active .chart_statistical.chartArea");
+                    areaChart.classList.add("active");
+                    var contentTableSelected = document.querySelector(".selectedStatiticalFor").value;
+                    var headerChart = createHeaderChart(contentTableSelected,null);
+                    var contentTable = document.querySelectorAll(".table_statistical.active .table tbody tr");
+                    var data = [];
+                    data = dataRenderChart(contentTableSelected, contentTable);
+                    createAreaChart(data, areaChart);
+                    areaChart.insertAdjacentElement('beforebegin', headerChart);
+                    break;
+                case "Biểu Đồ Phân Tán":
+                    var pointChart = document.querySelector(".table_statistical.active .chart_statistical.chartPoint");
+                    pointChart.classList.add("active");
+                    var contentTableSelected = document.querySelector(".selectedStatiticalFor").value;
+                    var headerChart = createHeaderChart(contentTableSelected, null);
+                    var contentTable = document.querySelectorAll(".table_statistical.active .table tbody tr");
+                    var data = [];
+                    data = dataRenderChart(contentTableSelected, contentTable);
+                    createPointChart(data, pointChart);
+                    pointChart.insertAdjacentElement('beforebegin', headerChart);
+                    break;
+
+                default:
+                    removerChart();
+                    break;
+
+
+            }
+
+            if (selectedRenderChart.selectedIndex != 0) {
+                var btnDelChart = document.getElementById("btnDelChart")
+                btnDelChart.style.visibility = "visible";
+                btnDelChart.addEventListener("click", function () {
+                    selectedRenderChart.selectedIndex = 0;
+                    removerChart();
+                    document.getElementById("btnDelChart").style.visibility = "hidden";
+                })
+
+            } 
+            if (selectedRenderChart.selectedIndex == 0) {
+                document.getElementById("btnDelChart").style.visibility = "hidden";
+            }
+        })
+    }
+
+    function dataRenderChart(contentTableSelected, contentTable) {
+        var data = [];
+        for (var i = 1; i < contentTable.length; i++) {
+            var rowData = {};
+            var cells = contentTable[i].querySelectorAll('td');
+            if (contentTableSelected == "Đơn Đặt Hàng") {
+                rowData = {
+                    maHoaDon: cells[0].innerText.trim(),
+                    maDonDatHang: cells[1].innerText.trim(),
+                    maNhanVien: cells[2].innerText.trim(),
+                    ngayBan: cells[3].innerText.trim(),
+                    triGia: getValue(cells[4].innerText.trim())
+                };
+            }
+            else if (contentTableSelected == "Loại Hàng") {
+                rowData = {
+                    maLH: cells[0].innerText.trim(),
+                    tenLH: cells[1].innerText.trim(),
+                    soLuongBan: cells[2].innerText.trim(),
+                    triGia: getValue(cells[3].innerText.trim())
+                };
+            } else if (contentTableSelected == "Sản Phẩm") {
+                rowData = {
+                    maSP: cells[0].innerText.trim(),
+                    tenSP: cells[1].innerText.trim(),
+                    tenLH: cells[2].innerText.trim(),
+                    soLuongBan: parseInt(cells[3].innerText.trim()),
+                    triGia: getValue(cells[4].innerText.trim())
+                };
+            }
+            else if (contentTableSelected == "Nhân Viên") {
+                rowData = {
+                    maNV: cells[0].innerText.trim(),
+                    hoTenNV: cells[1].innerText.trim(),
+                    soLuongBan: parseInt(cells[2].innerText.trim()),
+                    triGia: getValue(cells[3].innerText.trim())
+                };
+            } else {
+                rowData = {
+                    maCTGG: cells[0].innerText.trim(),
+                    tenCTGG: cells[1].innerText.trim(),
+                    soLuongBan: cells[2].innerText.trim(),
+                    triGia: getValue(cells[3].innerText.trim())
+                };
+            }
+            data.push(rowData);
+        }
+        return data;
+    }
+
+    function removerChart() {
+        var pieChart = document.querySelector(".table_statistical.active .chart_statistical.active");
+        if (pieChart) {
+            pieChart.innerHTML = "";
+            if (pieChart.classList.contains("active")) {
+                pieChart.classList.remove("active");
+            }
+        }
+        
+        var headerChart = document.querySelector(".table_statistical h3");
+        if (headerChart) {
+            headerChart.remove()
+        }
+
+        var btnDelChart = document.getElementById("btnDelChart");
+        btnDelChart.style.visibility = "hidden";
+
+            
+    }
+
+    function createHeaderChart(contentTableSelected,typeChart) {
+        var headerChart = document.createElement("h3");
+        headerChart.style.textAlign = "center";
+
+        // Cài đặt nội dung tiêu đề dựa trên tùy chọn đã chọn
+        switch (contentTableSelected) {
+            case "Đơn Đặt Hàng":
+                headerChart.textContent = "Biểu Đồ Đường Doanh Thu Theo Đơn Đặt Hàng";
+                
+                break;
+            case "Loại Hàng":
+                if (typeChart == "Biểu Đồ Tròn") {
+                    headerChart.textContent = "Biểu Đồ Tròn Theo Số Lượng Bán Ra Của Loại Hàng";
+                } else if (typeChart == "Biểu Đồ Cột") {
+                    headerChart.textContent = "Biểu Đồ Cột Doanh Thu Theo Loại Hàng";
+                }
+                break;
+            case "Sản Phẩm":
+                headerChart.textContent = "Biểu Đồ Phân Tán Theo Số Lượng Bán Ra Của Sản Phẩm";
+                break;
+            case "Nhân Viên":
+                if (typeChart == "Biểu Đồ Tròn") {
+                    headerChart.textContent = "Biểu Đồ Tròn Theo Số Lượng Tạo Của Nhân Viên";
+                } else if (typeChart == "Biểu Đồ Cột") {
+                    headerChart.textContent = "Biểu Đồ Cột Doanh Thu Theo Nhân Viên";
+                }
+               
+                break;
+            default:
+                if (typeChart == "Biểu Đồ Tròn") {
+                    headerChart.textContent = "Biểu Đồ Tròn Theo Số Lượng Bán Ra Của Chương Trình Giảm Giá";
+                } else if (typeChart == "Biểu Đồ Cột") {
+                    headerChart.textContent = "Biểu Đồ Cột Doanh Thu Theo Chương Trình Giảm Giá";
+                }
+                
+                break;
+        }
+        return headerChart;
+
+    }
+
+    function createPieChart(object, mainColumn,posititon) {
+
+        var total = 0;
+        var dataPoints = {};
+        if (mainColumn == "Đơn Đặt Hàng") {
+            total = object.reduce((sum, row) => sum + row.triGia, 0);
+
+            dataPoints = object.map(row => {
+                return {
+                    y: (row.triGia / total) * 100,
+                    label: row.maDonDatHang
+                };
+            });
+        }
+        else if (mainColumn == "Loại Hàng") {
+            total = object.reduce((sum, row) => sum + row.triGia, 0);
+
+            dataPoints = object.map(row => {
+                return {
+                    y: (row.triGia / total) * 100,
+                    label: row.tenLH
+                };
+            });
+        }
+        else if (mainColumn == "Sản Phẩm") {
+            total = object.reduce((sum, row) => sum + row.soLuongBan, 0);
+
+            dataPoints = object.map(row => {
+                return {
+                    y: (row.soLuongBan / total) * 100,
+                    label: row.tenSP
+                };
+            });
+        }
+        else if (mainColumn == "Nhân Viên") {
+            total = object.reduce((sum, row) => sum + row.soLuongBan, 0);
+
+            dataPoints = object.map(row => {
+                return {
+                    y: (row.soLuongBan / total) * 100,
+                    label: row.hoTenNV
+                };
+            });
+        } else {
+            total = object.reduce((sum, row) => sum + row.triGia, 0);
+
+            dataPoints = object.map(row => {
+                return {
+                    y: (row.triGia / total) * 100,
+                    label: row.tenCTGG
+                };
+            });
+        }
+
+        
+
+        var chart = new CanvasJS.Chart(posititon, {
+            animationEnabled: true,
+            data: [{
+                type: "pie",
+                startAngle: 240,
+                yValueFormatString: "##0.00\"%\"",
+                indexLabel: "{label} {y}",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+    }
+
+    function createColumnChart(object, mainColumn, position) {
+        if (mainColumn == "Đơn Đặt Hàng") {
+
+            dataPoints = object.map(row => {
+                return {
+                    y: row.triGia,
+                    label: row.maDonDatHang
+                };
+            });
+        }
+        else if (mainColumn == "Loại Hàng") {
+
+            dataPoints = object.map(row => {
+                return {
+                    y: row.triGia,
+                    label: row.tenLH
+                };
+            });
+        }
+        else if (mainColumn == "Sản Phẩm") {
+
+            dataPoints = object.map(row => {
+                return {
+                    y: row.triGia,
+                    label: row.tenSP
+                };
+            });
+        }
+        else if (mainColumn == "Nhân Viên") {
+
+            dataPoints = object.map(row => {
+                return {
+                    y: row.triGia,
+                    label: row.hoTenNV
+                };
+            });
+        } else {
+
+            dataPoints = object.map(row => {
+                return {
+                    y: row.triGia,
+                    label: row.tenCTGG
+                };
+            });
+        }
+
+        var chart = new CanvasJS.Chart(position, {
+            animationEnabled: true,
+            theme: "light1",
+            data: [{
+                type: "column",
+                showInLegend: true,
+                legendMarkerColor: "grey",
+                legendText: "VNĐ = Việt Nam Đồng",
+                indexLabel: "{label} {y}",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+    }
+
+    function createAreaChart(object, position) {
+
+        dataPoints = object.map(row => {
+            return {
+                y: row.triGia,
+                label: row.maDonDatHang
+            };
+        });
+
+        dataPoints = object.map(row => {
+            return {
+                y: row.triGia,
+                x: parseDate(row.ngayBan)
+            };
+        });
+
+        dataPoints.sort((a, b) => a.x - b.x);
+
+        var chart = new CanvasJS.Chart(position, {
+            animationEnabled: true,
+            axisX: {
+                labelFormatter: function (e) {
+                    var year = e.value.getFullYear();
+                    var month = ("0" + (e.value.getMonth() + 1)).slice(-2); 
+                    return month + "-" + year;
+                }
+            },
+            axisY: {
+                title: "Doanh Thu VNĐ",
+                valueFormatString: "#,##0đ",
+            },
+            data: [{
+                type: "splineArea",
+                color: "rgba(54,158,173,.7)",
+                markerSize: 5,
+                xValueFormatString: "DD-MM-YYYY",
+                yValueFormatString: "#,##0đ",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+
+    }
+
+    function createPointChart(object, postiton) {
+
+        dataPoints = object.map(row => {
+            return {
+                y: row.triGia,
+                x: row.soLuongBan,
+                name: row.tenSP
+            };
+        });
+
+        dataPoints.sort((a, b) => a.y - b.y);
+
+        var chart = new CanvasJS.Chart(postiton, {
+            animationEnabled: true,
+            zoomEnabled: true,
+            axisX: {
+                title: "Số Lượng Bán",
+                minimum: 0,
+                maximum: 20
+            },
+            axisY: {
+                title: "Giá Bán VND",
+                valueFormatString: "#,##0đ"
+            },
+            data: [{
+                type: "scatter",
+                toolTipContent: "<b>Name:</b> {name} </br> <b>Số lượng bán: </b>{x}<br/><b>Giá bán: </b>${y}vnd",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

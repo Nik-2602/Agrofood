@@ -1,0 +1,22 @@
+﻿
+<div class="side__bar-transition">
+    <h3 class="side__bar-transition-heading">
+        <i class="fas fa-list"></i>
+        Danh mục
+    </h3>
+    <ul class="side_transition-list-top">
+        @{
+
+
+            foreach (var item in ViewBag.getControllerHome.DanhSachLoaiHang)
+            {
+                <li class="side_transition-item-top">
+                    <a>
+                        <span>@item.TenLH</span>
+                    </a>
+                </li>
+            }
+
+        }
+    </ul>
+</div>

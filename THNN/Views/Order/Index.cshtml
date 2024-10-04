@@ -1,0 +1,954 @@
+﻿
+@model List<THNN.Models.SP_LH_DDH_CTDDH>
+
+@{
+    ViewBag.Title = "Đặt Hàng";
+    Layout = "~/Views/Shared/LayoutUserNoJS.cshtml";
+}
+
+
+@section style {
+    .content_top-forgot {
+    margin-top:8px;
+    }
+
+    hr {
+    top:64%;
+    }
+
+    .content__login {
+    top: 51px !important;
+    }
+
+    .detail_list_product {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
+    margin-top: 10px;
+    }
+
+    .detail_list_product-head {
+    font-size: 2.6rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    }
+
+    .table_list_product {
+    text-align: center;
+    margin-left: auto;
+    }
+
+    .table_list_product .dp_right-box-control-quantity {
+    margin-left: auto;
+    margin-right: 0;
+    align-items: center;
+    justify-content: center;
+    }
+
+
+    .table_list_product tr,.table_list_product td {
+    border: 1px solid #ddd;
+    }
+
+    .table_list_product .head_table {
+    padding: 8px 20px;
+    font-size: 1.8rem;
+    font-weight: 600;
+    background-color: #00B412;
+    color: #fff;
+    }
+
+    .table_list_product td img {
+    width: 70px;
+    height: 70px;
+    }
+
+    .table_list_product td {
+    font-size: 1.6rem;
+    }
+
+    .del_row-table {
+    cursor:pointer;
+    }
+
+    .total_list_product {
+    align-self: flex-end !important;
+    font-size: 1.8rem;
+    }
+
+    .total_list_product span {
+    font-weight: 700;
+    }
+
+
+    .list_btn_DP button {
+    border: none;
+    /* float: right; */
+    /* margin-right: auto; */
+    background-color: #00B412;
+    color: #fff;
+    border-radius: 4px;
+    outline: none;
+    padding: 8px 30px;
+    font-size: 1.8rem;
+    margin: 0 10px;
+    margin-bottom: 20px;
+    }
+
+    .sub-header__lp {
+    align-self: start;
+    font-size: 2.2rem;
+    font-weight: 600;
+    position: relative;
+    }
+
+    .sub-header__lp.active {
+    display: none;
+    }
+
+    .sub_content-delivery.active {
+    display: none;
+    }
+
+    .sub_content-delivery {
+    border: 1px solid #ddd;
+    width: 100%;
+    padding: 40px 100px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    justify-content: center;
+    margin-bottom: 20px;
+    }
+
+    .lable__header-delivery {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    margin-bottom: 5px;
+    font-weight: 600;
+    }
+
+
+    .content_top-input {
+    display: block;
+    width: 100%;
+    font-size: 1.6rem;
+    padding: 7px 10px;
+    background-color: #fff;
+    margin-bottom: 30px;
+    border: 1px solid rgb(219, 219, 219);
+    outline-color: #7b7b7b;
+    }
+
+    .content_top-input::placeholder {
+    color: #999;
+    }
+
+    .continue_buy_pro {
+    align-self: flex-end !important;
+    }
+
+    .continue_buy_pro a {
+    text-decoration: none;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: #000;
+    }
+
+    .list_btn_DP .btn__delivery.active {
+    display: none;
+    }
+
+    .list_btn_DP .btn__del-all.active {
+    display: none;
+    }
+
+    .header__action-list >li:last-child {
+    display:none;
+    }
+
+    .toastRB {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-left: 4px solid;
+    min-width: 400px;
+    max-width: 450px;
+    padding: 20px 0;
+    border-radius: 2px;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08);
+    transition: all linear 0.3s;
+    }
+
+    @@keyframes slideInLeft {
+    from {
+    opacity: 0;
+    transform: translateX(calc(100% + 32px));
+    }
+    to {
+    opacity: 1;
+    transform: translateX(0);
+    }
+    }
+
+    @@keyframes fadeOut {
+    to {
+    opacity: 0;
+    }
+    }
+
+    .toast + .toast {
+    margin-top: 24px;
+    }
+
+    .toast__icon {
+    font-size: 24px;
+    }
+
+    .toast__icon,
+    .toast__close {
+    padding: 0 16px;
+    }
+    .toast__content {
+    flex-grow: 1;
+    }
+    .toast__title {
+    font-size: 16px;
+    font-weight: 6000;
+    color: #333;
+    }
+    .toast__msg {
+    font-size: 14px;
+    color: #888;
+    margin-top: 6px;
+    line-height: 1.5;
+    }
+    .toast__close {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    }
+
+    .toast--success {
+    border-color: #47d864;
+    }
+
+    .toast--success .toast__icon {
+    color: #47d864;
+    }
+
+    .toast--info {
+    border-color: #2f86eb;
+    }
+
+    .toast--info .toast__icon {
+    color: #2f86eb;
+    }
+    .toast--error {
+    border-color: #ff623d;
+    }
+
+    .toast--error .toast__icon {
+    color: #ff623d;
+    }
+
+    .toast--warning {
+    border-color: #ffc021;
+    }
+
+    .toast--warning .toast__icon {
+    color: #ffc021;
+    }
+
+    .toast__close:hover {
+    opacity: 0.6;
+    }
+
+    #toast {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 999;
+    }
+
+    .btn {
+    padding: 12px 48px;
+    font-size: 20px;
+    border-radius: 50px;
+    max-width: 450px;
+    color: #fff;
+    display: inline-block;
+    }
+
+    .btn + .btn {
+    margin-left: 14px;
+    }
+
+    .btn--success {
+    background-color: #47d864;
+    }
+
+    .btn--error {
+    background-color: #ff623d;
+    }
+
+    .btn:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    }
+
+    .selected::after {
+    background-image: url(../assets/img/img-bank/Flat_tick_icon.svg.png);
+    }
+
+    .invalid-tooltip {
+        top:68%;
+        font-size: 1.5rem;
+    }
+
+
+
+}
+
+
+<div class="detail_list_product">
+    <h1 class="detail_list_product-head">THÔNG TIN ĐƠN ĐẶT HÀNG</h1>
+
+    <p class="sub-header__lp"><i class="fas fa-info-circle"></i> Thông tin sản phẩm</p>
+    @{
+        if (Model != null)
+        {
+            var TriGia = 0;
+            string triGiaFomat = "";
+            <table class="table_list_product">
+                <tr>
+                    <td class="head_table">Mã sản phẩm</td>
+                    <td class="head_table">Tên loại hàng</td>
+                    <td class="head_table">Tên sản phẩm</td>
+                    <td class="head_table">Hình ảnh minh họa</td>
+                    <td class="head_table">Đơn giá</td>
+                    <td class="head_table">Số luọng</td>
+                    <td class="head_table">Thành tiền</td>
+                    <td class="head_table"></td>
+                </tr>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var item = Model[i];
+                    string giaBanFormat = string.Format("{0:n0}", item.GiaBan);
+                    string tongTienFormat = string.Format("{0:n0}", item.TongTien);
+
+                    <tr>
+
+                        <td class="maSP">@item.MaSP</td>
+                        <td>@item.TenLH</td>
+                        <td>@item.TenSP</td>
+                        <td><img src="@item.HinhAnh" alt=""></td>
+                        <td class="giaBanSP">@giaBanFormat</td>
+                        <td>
+                            <div class="dp_right-box-control-quantity">
+
+                                <button class="minus-quatity">
+                                    <i class="fas fa-minus "></i>
+                                </button>
+                                <span class="quantity-product" SoLuongTon="@item.SoLuongT">@item.SoLuong</span>
+                                <button class="plus-quatity">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="tongTien">@tongTienFormat</td>
+                        <td class="del_row-table">Xóa</td>
+
+                    </tr>
+                    TriGia += item.TongTien;
+                    triGiaFomat = string.Format("{0:n0}", TriGia);
+                }
+            </table>
+
+            <div class="total_list_product" style="font-weight: 700; ">Tổng cộng : <span>@triGiaFomat</span> đ</div>
+
+        }
+    }
+    <p class="sub-header__lp sub-header__lp-order active"><i class="fas fa-info-circle"></i> Thông tin đơn đặt hàng</p>
+    <div id="myForm" novalidate class="sub_content-delivery active">
+        @{
+            if (Model != null)
+            {
+                for (int i = Model.Count - 1; i < Model.Count; i++)
+                {
+                    if (Model.Count == 0)
+                    {
+                        <label class="lable__header-delivery" for="">Họ tên người nhận</label>
+                        <input class="content_top-input form-control hoTenNN" disabled type="text">
+
+                        <label class="lable__header-delivery" for="">Địa chỉ</label>
+                        <input class="content_top-input form-control diaChiNN" disabled type="text">
+
+                        <label class="lable__header-delivery" for="">Điện thoại</label>
+                        <input class="content_top-input form-control SDTNN" disabled type="text">
+
+                        <label class="lable__header-delivery" for="">Email</label>
+                        <input class="content_top-input form-control EmailNN" disabled type="text">
+
+                        <label class="lable__header-delivery" for="">Hình thức giao hàng</label>
+                        <select disabled class="content_top-input form-control selectedHTGH" name="" id="">
+                            <option value="Giao hàng tận nơi">Giao hàng tận nơi</option>
+                            <option value="Giao hàng nhanh">Giao hàng nhanh</option>
+                            <option checked value="Giao hàng tiết kiệm">Giao hàng tiết kiệm</option>
+                        </select>
+
+                        <label class="lable__header-delivery" for="payment-method">Hình thức thanh toán</label>
+                        <select disabled class="content_top-input form-control selectedHTGH" name="" id="payment-method">
+                            <option selected value="Giao hàng tận nơi">Thanh Toán COD</option>
+                            <option value="Giao hàng nhanh">Thanh Toán Trực Tuyến</option>
+                        </select>
+
+                        <button disabled id="btnOrder" class="btn__delivery-order_in_container" style="display: block; padding: 5px 30px; background-color: var(--main-color); color: #fff;outline: none; border: none; margin-bottom: 20px; font-size: 1.6rem; border-radius: 4px;">Đặt Hàng</button>
+                    }
+                    else
+                    {
+                        var item = Model[i];
+
+                        <div class="form-group position-relative">
+                            <label class="lable__header-delivery" for="name">Họ tên người nhận</label>
+                            <input class="content_top-input form-control hoTenNN" id="name" type="text" required value="@item.HoTen">
+                            <div class="invalid-tooltip">
+                                Vui lòng nhập họ tên người nhận.
+                            </div>
+                        </div>
+                            
+                        
+                        
+
+                        <div class="form-group position-relative">
+                            <label class="lable__header-delivery" for="address">Địa chỉ</label>
+                            <input class="content_top-input form-control diaChiNN" id="address" type="text" required value="@item.DiaChi">
+                            <div class="invalid-tooltip">
+                                Vui lòng nhập địa chỉ người nhận.
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group position-relative">
+                            <label class="lable__header-delivery" for="phoneNumber">Điện thoại</label>
+                            <input class="content_top-input form-control SDTNN" type="text" id="phoneNumber" required value="@item.SDT">
+                            <div class="invalid-tooltip">
+                                Vui lòng nhập điện thoại người nhận.
+                            </div>
+                        </div>
+                        
+
+                        <div class="form-group position-relative">
+                            <label class="lable__header-delivery" for="email">Email</label>
+                            <input class="content_top-input form-control EmailNN" type="text" id="email" required value="@item.Email">
+                            <div class="invalid-tooltip">
+                                Vui lòng nhập email người nhận.
+                            </div>
+                        </div>
+
+
+                        <div class="form-group position-relative">
+                            <label class="lable__header-delivery" for="htgh">Hình thức giao hàng</label>
+                            <select class="content_top-input form-select selectedHTGH" required name="" id="htgh">
+                                <option value="Giao hàng tận nơi">Giao hàng tận nơi</option>
+                                <option value="Giao hàng nhanh">Giao hàng nhanh</option>
+                                <option checked value="Giao hàng tiết kiệm">Giao hàng tiết kiệm</option>
+                            </select>
+                            <div class="invalid-tooltip">
+                                Vui lòng chọn hình thức giao hàng.
+                            </div>
+                        </div>
+
+
+                        <div class="form-group position-relative">
+                            <label class="lable__header-delivery" for="payment-method">Hình thức thanh toán</label>
+                            <select class="content_top-input form-select selectedHTGH" required name="" id="payment-method">
+                                <option selected value="Thanh Toán COD">Thanh Toán COD</option>
+                                <option value="Thanh Toán Trực Tuyến">Thanh Toán Trực Tuyến</option>
+                            </select>
+                            <div class="invalid-tooltip">
+                                Vui lòng chọn hình thức thanh toán.
+                            </div>
+                        </div>
+
+
+                        <div id="bankchoose" style="display: none; margin-bottom: 12px">
+                            <div>
+                                <ul style="display:flex; list-style: none;">
+                                    <li class="mx-3" id="vnpay">
+                                        <img style="width: 50px;" src="../../assets/img/img-bank/vnpay.jpg" />
+                                    </li>
+
+                                </ul>
+                            </div>
+
+
+                        </div>
+                        <input type="hidden" id="loaiThanhToanTrucTuyen" />
+                        <button id="btnOrder" class="btn__delivery-order_in_container" style="display: block; padding: 5px 30px; background-color: var(--main-color); color: #fff;outline: none; border: none; margin-bottom: 20px; font-size: 1.6rem; border-radius: 4px;">Đặt Hàng</button>
+
+                    }
+
+
+                }
+            }
+        }
+    </div>
+
+    <div class="list_btn_DP">
+        <button class="btn__delivery btn__delivery-order">Đặt hàng</button>
+        <button class="btn__delivery btn__update-delivery">Cập nhật giỏ hàng</button>
+    </div>
+
+    <span class="continue_buy_pro"><a href="~/Home">Tiếp tục mua hàng >>>></a></span>
+
+</div>
+
+
+
+
+@section Script {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/js/toast.js" asp-append-version="true"></script>
+    <script>
+        function showSuccessUpdateOrder() {
+            toast({
+                title: "Thành công",
+                message: "Đã cập nhật đơn đặt hàng thành công",
+                type: "success",
+                duration: 3000,
+            });
+        }
+    </script>
+
+    @*Search on category*@
+    <script>
+        const listItem = document.querySelectorAll(".side_transition-item-top>a")
+        const listDetailItem = document.querySelectorAll(".side_transition-item-top .side_transition-detail .side_transition-detail-item");
+
+
+        listItem.forEach((item) => {
+            item.addEventListener("click", () => {
+                const isActive = item.parentElement.classList.contains("active");
+
+                if (isActive) {
+                    item.parentElement.classList.remove("active");
+                } else {
+
+                    listItem.forEach((otherItem) => {
+                        otherItem.parentElement.classList.remove("active");
+                    });
+                    item.parentElement.classList.add("active");
+                }
+            });
+        });
+
+        listItem.forEach((item) => {
+            item.addEventListener("click", () => {
+                const spanElement = item.querySelector("span");
+                if (spanElement) {
+                    const SearchTerm = spanElement.textContent;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Search/SearchOnCategory",
+                        data: JSON.stringify({ search: SearchTerm }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            window.location.href = "/Search";
+                        },
+                        error: function (error) {
+                            console.error("Error occurred during AJAX request:", error);
+                        },
+
+                    });
+
+
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+    </script>
+
+
+    @if (Session["User"] != null)
+    {
+        <script>
+            function getValue(valueString) {
+                var valueWithoutCurrency = valueString.includes('đ') ? valueString.replace(/đ/g, '') : valueString;
+                var valueWithoutCommas = valueWithoutCurrency.includes(',') ? valueWithoutCurrency.replace(/,/g, '') : valueWithoutCurrency;
+                var cleanedValue = valueWithoutCommas.includes('.') ? valueWithoutCommas.replace(/\./g, '') : valueWithoutCommas;
+                var value = parseInt(cleanedValue, 10);
+                if (isNaN(value)) {
+                    return valueString;
+                }
+
+                return value;
+            }
+
+            function formatNumber(value) {
+                return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            function convertDateToYYYYMMDD(date) {
+                const [day, month, year] = date.split("/");
+                return `${year}-${month}-${day}`;
+            }
+
+            function validateInput(input) {
+            var isValid = true;
+
+            if (input.id === 'name') {
+                // Check if username contains only letters
+                var usernamePattern = /[^0-9]/;
+                if (!usernamePattern.test(input.value)) {
+                    isValid = false;
+                    input.nextElementSibling.textContent = "Họ tên người nhận không chính xác.";
+                }
+            } else if (input.id === 'email') {
+                // Check if email is valid
+                var emailPattern = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+                if (!emailPattern.test(input.value)) {
+                    isValid = false;
+                    input.nextElementSibling.textContent = "Vui lòng nhập chính xác định dạng email.";
+                }
+            } else if (input.id === 'phoneNumber') {
+                // Check if phone number is exactly 10 digits
+                if (input.value.length !== 10 || isNaN(input.value)) {
+                    isValid = false;
+                    input.nextElementSibling.textContent = "Vui lòng nhập chính xác số điện thoại.";
+                }
+            }
+
+            if (!isValid) {
+                input.classList.add('is-invalid');
+                input.classList.remove('is-valid');
+            } else {
+                input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
+            }
+
+            return isValid;
+        }
+
+
+            var paymentMethodSelect = document.getElementById("payment-method");
+            var bankChooseDiv = document.getElementById("bankchoose");
+            var vnpayBank = document.getElementById("vnpay");
+            var btnOrder = document.getElementById("btnOrder");
+
+
+            paymentMethodSelect.addEventListener("change", function () {
+                if (paymentMethodSelect.value == "Thanh Toán Trực Tuyến") {
+                    bankChooseDiv.style.display = "block";
+                    console.log(document.getElementById("loaiThanhToanTrucTuyen").value)
+                    if (document.getElementById("loaiThanhToanTrucTuyen").value == null || document.getElementById("loaiThanhToanTrucTuyen").value == "") {
+                        console.log(btnOrder);
+                        btnOrder.setAttribute("disabled", true)
+                    }
+                } else {
+                    bankChooseDiv.style.display = "none";
+                    document.getElementById("loaiThanhToanTrucTuyen").value = null;
+                    vnpayBank.classList.remove("selected");
+                    btnOrder.removeAttribute("disabled")
+                }
+            });
+
+            vnpayBank.addEventListener("click", function () {
+                vnpayBank.classList.add("selected");
+                document.getElementById("loaiThanhToanTrucTuyen").value = "vnpay";
+                btnOrder.removeAttribute("disabled")
+            });
+
+
+            const minusBtns = document.querySelectorAll('.table_list_product tr .minus-quatity');
+            const plusBtns = document.querySelectorAll('.table_list_product tr .plus-quatity')
+            const delBtns = document.querySelectorAll(".table_list_product tr .del_row-table")
+
+            /*Tăng giảm số lượng mua*/
+            minusBtns.forEach(minusBtn => {
+                minusBtn.addEventListener('click', (event) => {
+                    const row = minusBtn.closest('tr');
+                    var spanElement = row.querySelector(".quantity-product[SoLuongTon]");
+                    var soLuongTon = parseInt(spanElement.getAttribute("SoLuongTon"));
+
+
+
+                    var currentQuantityCart = parseInt(row.querySelector('.quantity-product').textContent);
+                    var quantityProduct = row.querySelector('.quantity-product');
+
+
+                    if (parseInt(quantityProduct.textContent) > 1) {
+
+                        quantityProduct.textContent = currentQuantityCart - 1;
+                        const giaBanSP = getValue(row.querySelector('.giaBanSP').textContent);
+                        row.querySelector('.tongTien').textContent = formatNumber(parseInt(quantityProduct.textContent) * giaBanSP);
+                        const triGia = document.querySelector('.total_list_product span');
+                        triGia.textContent = formatNumber(parseInt(getValue(triGia.textContent)) - giaBanSP);
+
+                    }
+                });
+            });
+
+            plusBtns.forEach(plusBtn => {
+                plusBtn.addEventListener('click', (event) => {
+                    // Lấy dòng TR chứa minusBtn
+                    const row = plusBtn.closest('tr');
+                    var spanElement = row.querySelector(".quantity-product[SoLuongTon]");
+                    var soLuongTon = parseInt(spanElement.getAttribute("SoLuongTon"));
+
+
+
+                    var currentQuantityCart = parseInt(row.querySelector('.quantity-product').textContent);
+                    var quantityProduct = row.querySelector('.quantity-product');
+                    console.log(quantityProduct)
+
+                    if (currentQuantityCart < soLuongTon) {
+                        quantityProduct.textContent = currentQuantityCart + 1;
+                        const giaBanSP = getValue(row.querySelector('.giaBanSP').textContent);
+                        row.querySelector('.tongTien').textContent = formatNumber(parseInt(quantityProduct.textContent) * giaBanSP);
+                        const triGia = document.querySelector('.total_list_product span');
+                        triGia.textContent = formatNumber(parseInt(getValue(triGia.textContent)) + giaBanSP);
+                    }
+
+                });
+            });
+
+
+            delBtns.forEach(delBtn => {
+                delBtn.addEventListener('click', (event) => {
+
+                    const row = delBtn.closest('tr');
+                    const tongTien = row.querySelector('.tongTien');
+                    @{ var listBuyKH = Session["getListBuyKH"] as List<THNN.Models.SP_LH_DDH_CTDDH>;
+                        var MaDDH = "";
+                        var MaKH = "";
+
+                        foreach (var item in listBuyKH)
+                        {
+                            MaDDH = item.MaDDH;
+                            MaKH = item.MaKH;
+
+                        }
+
+                    }
+
+                    var MaSP = row.querySelector(".maSP").textContent;
+                    const triGia = document.querySelector('.total_list_product span');
+                    triGia.textContent = parseInt(triGia.textContent) - parseInt(tongTien.textContent);
+                     if (row) {
+                         $.ajax({
+                         type: "POST",
+                         url: "/Order/XoaSanPham",
+                             data: JSON.stringify({ maDDH: "@MaDDH", maSP: MaSP }),
+                         contentType: "application/json; charset=utf-8",
+                         dataType: "json",
+                         success: function (result) {
+                                 alert(result.message);
+                             }
+                         });
+
+                         row.remove();
+
+
+
+                     }
+
+
+
+
+
+
+
+            });
+            });
+
+            var btnUpdateDelivery = document.querySelector(".btn__update-delivery");
+            btnUpdateDelivery.addEventListener("click", () => {
+                var listCTDH = document.querySelectorAll(".table_list_product tr");
+                 var maDDH = "@MaDDH";
+                var listCTDHData = [];
+                for (var i = 1; i < listCTDH.length; i++) {
+                    var ctdh = listCTDH[i];
+
+
+
+                    var maSP = ctdh.querySelector(".maSP").textContent;
+                    var soLuong = parseInt(ctdh.querySelector(".quantity-product").textContent);
+                    var giaBanSP = getValue(ctdh.querySelector(".giaBanSP").textContent);
+                    var tongTien = getValue(ctdh.querySelector(".tongTien").textContent);
+
+
+                    var ctdhData = {
+                        MaDDH: maDDH,
+                        MaSP: maSP,
+                        SoLuong: soLuong,
+                        GiaBan: giaBanSP,
+                        TongTien: tongTien,
+                    };
+
+                    listCTDHData.push(ctdhData);
+                }
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Order/CapNhatGioHang",
+                    data: JSON.stringify(listCTDHData),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success) {
+                            console.log(1);
+                            showSuccessUpdateOrder();
+                        }
+                    }
+                });
+
+            })
+
+
+            var btnDelivery = document.querySelector(".btn__delivery-order");
+            var headerDelivery = document.querySelector(".sub-header__lp-order");
+            var containerDelivery = document.querySelector(".sub_content-delivery");
+            btnDelivery.addEventListener("click", () => {
+                if (headerDelivery.matches(".sub-header__lp.sub-header__lp-order.active")) {
+                    headerDelivery.classList.remove("active");
+                }
+
+
+
+                if (containerDelivery.matches(".sub_content-delivery.active")) {
+                    containerDelivery.classList.remove("active");
+                }
+                $(".btn__delivery-order").hide();
+                $(".btn__update-delivery").hide();
+                const btnOrderInContainer = document.querySelector(".btn__delivery-order_in_container");
+                btnOrderInContainer.addEventListener("click", () => {
+                    /*Validation form*/
+                    var form = document.getElementById("myForm")
+                    var inputs = form.getElementsByTagName("input");
+                    var valid = true;
+
+                    Array.prototype.forEach.call(inputs, function (input) {
+                        if (input.checkValidity() === false) {
+                            valid = false;
+                            input.classList.add('is-invalid');
+                        } else {
+                            input.classList.remove('is-invalid');
+                        }
+
+                        if (!validateInput(input)) {
+                            valid = false;
+                        }
+                    });
+
+                    if (valid) {
+                        var maDDH = "@MaDDH";
+                        var maKH = "@MaKH";
+                        var hoTenNN = document.querySelector(".hoTenNN").value;
+                        var diaChiNN = document.querySelector(".diaChiNN").value;
+                        var soDTNN = document.querySelector(".SDTNN").value;
+                        var emailNN = document.querySelector(".EmailNN").value;
+                        var HTGH = document.querySelector(".selectedHTGH");
+                        const indexHTGH = HTGH.selectedIndex;
+                        var selectedHTGH = HTGH.options[indexHTGH].value;
+                        var HTTT = paymentMethodSelect.value
+                        var loaiThanhToanTT = document.getElementById("loaiThanhToanTrucTuyen").value;
+                        const triGia = getValue(document.querySelector('.total_list_product span').textContent);
+                        const addDaysToDate = (date, days) => {
+                            const newDate = new Date(date);
+                            newDate.setDate(newDate.getDate() + days);
+                            return newDate;
+                        };
+
+
+
+                        const today = new Date();
+                        const dateNDH = today.toLocaleDateString();
+                        const ngayDH = convertDateToYYYYMMDD(dateNDH);
+                        const threeDaysLater = addDaysToDate(today, 3);
+                        const dateGH = threeDaysLater.toLocaleDateString();
+                        const ngayGH = convertDateToYYYYMMDD(dateGH);
+                        const tinhTrang = "Đã đặt hàng";
+
+                        var donDatHangData = {
+                            MaDDH: maDDH,
+                            MaKH: maKH,
+                            NgayDH: ngayDH,
+                            NgayGH: ngayGH,
+                            TenNguoiNhan: hoTenNN,
+                            DiaChiNhan: diaChiNN,
+                            SDTNhanHang: soDTNN,
+                            Email: emailNN,
+                            HTThanhToan: HTTT,
+                            HTGiaoHang: selectedHTGH,
+                            TriGia: triGia,
+                            TinhTrang: tinhTrang,
+                            LoaiThanhToanTT: loaiThanhToanTT
+                        };
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Order/ThemDDH",
+                            data: JSON.stringify(donDatHangData),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (response) {
+                                var data = response.data;
+
+                                window.location.href = "/ThanhToan?amount=" + data.amount +"&orderInfo="+data.orderInfo+"";
+                            }
+                        });
+
+                        if (headerDelivery.matches(".sub-header__lp.sub-header__lp-order")) {
+                            headerDelivery.classList.add("active");
+                        }
+
+
+
+                        if (containerDelivery.matches(".sub_content-delivery")) {
+                            containerDelivery.classList.add("active");
+                        }
+                            const tableDDH = document.querySelector(".table_list_product");
+                            tableDDH.innerHTML = `
+                        <tr>
+                            <td class="head_table">Mã sản phẩm</td>
+                            <td class="head_table">Tên loại hàng</td>
+                            <td class="head_table">Tên sản phẩm</td>
+                            <td class="head_table">Hình ảnh minh họa</td>
+                            <td class="head_table">Đơn giá</td>
+                            <td class="head_table">Số luọng</td>
+                            <td class="head_table">Thành tiền</td>
+                            <td class="head_table"></td>
+                        </tr>
+                        `
+                        const triGiaHTML = document.querySelector('.total_list_product span');
+                        triGiaHTML.innerHTML = `
+                             <span>0</span>
+                        `
+                    }
+
+
+
+                })
+
+            })
+
+
+
+
+
+        </script>
+    }
+    <script src="~/assets/js/side_bar.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+}

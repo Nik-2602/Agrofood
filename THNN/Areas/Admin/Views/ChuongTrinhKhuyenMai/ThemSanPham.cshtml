@@ -1,0 +1,205 @@
+﻿
+@model IEnumerable<THNN.Models.SanPham>
+
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+<main>
+    <section class="service_section">
+        <div style=" padding-bottom: 40px;" class="container-fluid">
+            @{
+                string MaCT = Session["MACT_Update-CTGG"] as string;
+            }
+
+            <h2>Danh sách sản phẩm</h2>
+            <table class="table">
+                <tr>
+                    @{
+                        var checkAll = true;
+                        foreach (var item in Model)
+                        {
+                            if (item.MaCT == null)
+                            {
+                                checkAll = false;
+                            }
+                        }
+                    }
+
+                    @if (checkAll == true)
+                    {
+                        <td id="click_all" class="details-control">
+                            <input class="form-check-input" checked type="checkbox" id="checkboxNoLabel"
+                                   value="" aria-label="...">
+                        </td>
+                    }
+                    else
+                    {
+                        <td id="click_all" class="details-control">
+                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel"
+                                   value="" aria-label="...">
+                        </td>
+                    }
+
+                    <th>
+                        Mã Sản Phẩm
+                    </th>
+                    <th>
+                        Tên Sản Phẩm
+                    </th>
+                    <th>
+                        Giá Bán
+                    </th>
+                    <th>
+                        Trọng Lượng
+                    </th>
+                    <th>
+                        Mô Tả
+                    </th>
+                    <th>
+                        Số Lượng Tồn
+                    </th>
+                    <th>
+                        Sản Xuất
+                    </th>
+                    <th>
+                        Thương Hiệu
+                    </th>
+                    <th>
+                        Hình Ảnh
+                    </th>
+                    <th>
+                        Hình Ảnh Khác
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @if (MaCT.Equals(item.MaCT))
+                        {
+                            <td class="details-control">
+                                <input class="form-check-input" checked name="masp" type="checkbox"
+                                       value="@item.MaSP" aria-label="...">
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="details-control">
+                                <input class="form-check-input" name="masp" type="checkbox"
+                                       value="@item.MaSP" aria-label="...">
+                            </td>
+                        }
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaSP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenSP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GiaBanSP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrongLuong)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MoTaSP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoLuongT)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SanXuat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThuongHieu)
+                        </td>
+                        <td>
+                            <img src="@item.HinhAnh" style="height:50px;width:50px" />
+                        </td>
+                        <td>
+                            <img src="@item.HinhAnh1" style="height:50px;width:50px" />
+                        </td>
+                    </tr>
+                }
+
+
+
+            </table>
+
+            @Html.ActionLink("Quay lại", "Index")
+
+        </div>
+    </section>
+</main>
+
+<script>
+    var currentUrl = window.location.href;
+    var parts = currentUrl.split('/');
+    var value = parts[parts.length - 1];
+    var listCheckBox = document.querySelectorAll("input[name = 'masp']")
+    listCheckBox.forEach((item, index) => {
+        item.addEventListener("change", function () {
+            var itemSelectValue = item.value;
+
+            var dataRequest = {
+                itemChecked: item.checked,
+                maSP: itemSelectValue,
+                maCT: value
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/ChuongTrinhKhuyenMai/ThemSanPham",
+                data: JSON.stringify(dataRequest),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+
+                }
+            })
+
+        })
+    })
+
+    var clickAll = document.getElementById("click_all");
+    clickAll.addEventListener("change", function () {
+        var listSP = [];
+        var itemChecked = false;
+        if (clickAll.querySelector("input").checked) {
+            listCheckBox.forEach(function (item) {
+                item.checked = true;
+                itemChecked = true;
+                var maSP = item.value;
+                listSP.push(maSP);
+            })
+        } else {
+            listCheckBox.forEach(function (item) {
+                item.checked = false;
+                itemChecked = false;
+                var maSP = item.value;
+                listSP.push(maSP);
+            })
+        }
+
+        var dataRequest = {
+            ItemChecked: itemChecked,
+            ListSP: listSP,
+            MaCT: value
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/ChuongTrinhKhuyenMai/ThemSanPhamAll",
+            data: JSON.stringify(dataRequest),
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+
+            }
+        })
+
+    })
+
+</script>
+

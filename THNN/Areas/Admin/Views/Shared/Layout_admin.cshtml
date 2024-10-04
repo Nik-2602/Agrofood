@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@ViewBag.title</title>
+    @RenderSection("Style", false);
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Areas/Admin/Content/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="~/Areas/Admin/Content/css/metisMenu.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Timeline CSS -->
+    <link href="~/Areas/Admin/Content/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="~/Areas/Admin/Content/css/startmin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="~/Areas/Admin/Content/css/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="~/Areas/Admin/Content/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link href="~/Areas/Admin/Content/css/customStatistical.css" rel="stylesheet" type="text/css"/>
+
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="~/Admin/HomeAdmin">Agrofood</a>
+            </div>
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <ul class="nav navbar-nav navbar-left navbar-top-links">
+                <li><a href="~/"><i class="fa fa-home fa-fw"></i> Website</a></li>
+            </ul>
+
+            <ul class="nav navbar-right navbar-top-links">
+                <li class="dropdown navbar-inverse">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> Hỗ trợ khách hàng
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fas fa-file-invoice fa-fw"></i>Đơn đặt hàng mới
+                                    <span class="pull-right text-muted small">12 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Alerts</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    @{var admin = Session["Admin"] as THNN.Models.NhanVien;
+
+                        if (admin != null)
+                        {
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-user fa-fw"></i> @admin.HoTen<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li>
+                                    <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                </li>
+
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="~/Admin/HomeAdmin/DangXuat"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                </li>
+                            </ul>
+                        }
+                    }
+
+
+                </li>
+            </ul>
+
+        </nav>
+
+        <aside class="sidebar navbar-default" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search">
+                        <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                    </li>
+                    <li>
+                        <a href="~/Admin/HomeAdmin" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    </li>
+
+                    @{
+                        if (admin.LoaiNV.Equals("Admin"))
+                        {
+                            <li>
+                                <a href="#"><i class="fas fa-id-card-alt fa-fw"></i>  Quản Lý Người Dùng <span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "NhanVien")">Quản lý nhân viên</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "KhachHang")">Quản lý khách hàng</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li>
+                                <a href="#"><i class="fas fa-cubes fa-fw"></i>  Quản Lý Nhập Hàng <span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "NhapHang")">Danh sách nhập hàng</a>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+                            <li>
+                                <a href="#"><i class="fas fa-database fa-fw"></i> Quản lý Sản Phẩm<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "NhaCungCap")">Nhà cung cấp</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "SanPham")">Sản phẩm</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li>
+                                <a href="#"><i class="fas fa-file-contract fa-fw"></i> Quản Lý Bán Hàng<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "BanHang")">Bán Hàng</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li>
+                                <a href="#"><i style="margin-right: 8px;" class="fas fa-calendar-plus"></i>Quản Lý Sự Kiện<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "ChuongTrinhKhuyenMai")">Chương Trình Khuyến Mãi</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li>
+                                <a href="#"><i class="fas fa-chart-line fa-fw"></i> Báo Cáo - Thông Kê<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "ThongKe")">Doanh thu</a>
+                                    </li>
+                                    @*<li>
+                                        <a href="@Url.Action("Index", "TonKho")">Tồn kho</a>
+                                    </li>*@
+
+                                </ul>
+
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="#"><i class="fas fa-cubes fa-fw"></i> Quản Lý Nhập Hàng <span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "NhapHang")">Danh sách nhập hàng</a>
+                                    </li>
+
+                                </ul>
+
+                            </li>
+                            <li>
+                                <a href="#"><i class="fas fa-database fa-fw"></i> Quản lý Sản Phẩm<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "NhaCungCap")">Nhà cung cấp</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index", "SanPham")">Sản phẩm</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            @*<li>
+                                <a href="#"><i class="fas fa-chart-line fa-fw"></i> Báo Cáo - Thông Kê<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="@Url.Action("Index", "TonKho")">Tồn kho</a>
+                                    </li>
+
+                                </ul>
+
+                            </li>*@
+                        }
+
+                    }
+
+
+
+
+                </ul>
+            </div>
+        </aside>
+
+
+        <div id="page-wrapper">
+            @RenderBody()
+
+        </div>
+
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="~/Areas/Admin/Content/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Areas/Admin/Content/js/bootstrap.min.js"></script>
+
+
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="~/Areas/Admin/Content/js/metisMenu.min.js"></script>
+
+
+    <script>
+        $(function () {
+
+            // Initialize MetisMenu
+            $('#side-menu').metisMenu();
+
+            // Handle side menu item clicks
+            $('.side-menu-item').click(function () {
+
+                // Get the name of the category
+                var categoryName = $(this).find("a").attr("data-category-name");
+
+                // Console.log the name of the category
+                console.log(categoryName);
+            });
+        });
+    </script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Areas/Admin/Content/js/startmin.js"></script>
+
+
+</body>
+
+</html>

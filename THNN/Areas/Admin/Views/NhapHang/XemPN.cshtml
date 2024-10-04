@@ -1,0 +1,67 @@
+﻿
+@model IEnumerable<THNN.Models.CTPhieuNhap>
+
+@{
+    ViewBag.Title = "Thông tin chi tiết phiếu nhập";
+    Layout = "~/Areas/Admin/Views/Shared/Layout_admin.cshtml";
+}
+
+<main>
+    <section class="service_section">
+        <div class="container">
+
+            <h2>Chi tiết phiếu nhập</h2>
+            <table class="table">
+                <tr>
+                    <th>
+                        Mã Nhập
+                    </th>
+                    <th>
+                        Mã Sản Phẩm
+                    </th>
+                    <th>
+                        Số Lượng
+                    </th>
+                    <th>
+                        Giá Nhập
+                    </th>
+                    <th>
+                        Thành Tiền
+                    </th>
+                    <th>
+                        Ghi Chú
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaSP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoLuong)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GiaNhap)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ThanhTien)
+                        </td>
+
+                    </tr>
+                }
+
+            </table>
+
+            <div>
+                @Html.ActionLink("Quay lại", "Index")
+            </div>
+
+        </div>
+    </section>
+</main>
+
+
